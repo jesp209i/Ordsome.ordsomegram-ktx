@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Ordsomegram</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_request">Forespørgsel</string>
+    <string name="title_answered_requests">Besvarede forespørgsler</string>
+    <string name="title_send_answers">Besvar forespørgsler</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="request_fragment_headline">Hvad skal du have oversat?</string>
     <string name="request_fragment_button_text">Send</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Her kan du besvare andres forespørgsler</string>
 </resources>
