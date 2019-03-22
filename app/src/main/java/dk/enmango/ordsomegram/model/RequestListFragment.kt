@@ -11,9 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import dk.enmango.ordsomegram.R
 
-import dk.enmango.ordsomegram.model.dummy.DummyContent
-import dk.enmango.ordsomegram.model.dummy.DummyContent.DummyItem
-
 /**
  * A fragment representing a list of Items.
  * Activities containing this fragment MUST implement the
@@ -80,7 +77,7 @@ class RequestListFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
+        fun onListFragmentInteraction(item: Request?)
     }
 
     companion object {

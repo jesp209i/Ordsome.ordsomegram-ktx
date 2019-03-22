@@ -1,13 +1,26 @@
 <resources>
+    <!-- Generel strings -->
     <string name="app_name">Ordsomegram</string>
     <string name="title_request">Forespørgsel</string>
     <string name="title_answered_requests">Besvarede forespørgsler</string>
     <string name="title_send_answers">Besvar forespørgsler</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Layout: fragment_request.xml -->
     <string name="request_fragment_headline">Hvad skal du have oversat?</string>
     <string name="request_fragment_button_text">Send</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Her kan du besvare andres forespørgsler</string>
+    <!-- Layout: fragment_request_answer.xml -->
+    <string name="request_answer_headline">Her kan du besvare andres forespørgsler</string>
+
+    <!-- Layout: fragment_answered_request.xml -->
+    <string name="answered_original_textview">Oprindelig tekst:</string>
+
+    <string name="answered_original_text">Where in the world is Carmen Santiago?</string> // original user submitted text
+    <string name="answered_target_language_text">Dansk</string> // target language to translate to
+    <string name="answered_source_language_text">Engelsk</string> // source language of the original text
+
+    <string name="answered_translated_textview">Oversat tekst:</string>
+    <string name="answered_translated_text">Hvor i alverden er Carmen Santiago?</string> // the translated text
+
+
 </resources>
