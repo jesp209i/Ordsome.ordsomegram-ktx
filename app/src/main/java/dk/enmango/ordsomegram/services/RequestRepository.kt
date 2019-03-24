@@ -1,28 +1,26 @@
 package dk.enmango.ordsomegram.services
 
+import dk.enmango.ordsomegram.model.IEntity
 import dk.enmango.ordsomegram.model.Request
 
-class RequestRepository : IRequestRepository{
+abstract class RequestRepository<Request> : IRepository<IEntity>{
     companion object {
-        var requests = mutableListOf<Request>()
+        var requests = mutableListOf<IEntity>()
     }
 
-    override fun addRequest(request: Request){
-        request.id = findNextNumber()
-        requests.add(request)
+    override fun add(entity: IEntity){
+        entity.id = findNextNumber().toString()
+        requests.add(entity)
     }
     override fun findNextNumber() : Int {
         return requests.size
     }
-    override fun getAllRequest() : MutableList<Request> {
+    override fun getAll() : MutableList<IEntity> {
         return requests
     }
-    override fun findRequestById(id: Int) : Request? {
+    override fun findById(id: String) : IEntity? {
         val request = requests.find{ request -> request.id == id }
         return request
     }
-
-
-
 }
 

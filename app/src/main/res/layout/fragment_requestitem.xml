@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal">
 
@@ -8,7 +8,9 @@
             android:id="@+id/item_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/reqitem_id_textview"
             android:layout_margin="@dimen/text_margin"
+            android:layout_rowSpan="2"
             android:textAppearance="?attr/textAppearanceListItem"/>
 
     <TextView
@@ -16,5 +18,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem"/>
-</LinearLayout>
+            android:text="@string/placeholder_original_text"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:layout_row="0" android:layout_column="1" android:layout_columnSpan="3"
+            android:layout_marginBottom="4dp" tools:clickable="false" android:layout_marginLeft="8dp"/>
+    <TextView
+            android:id="@+id/source_language_textview"
+            android:text="@string/placeholder_source_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="12sp"
+            android:textAppearance="?attr/textAppearanceListItem" android:layout_row="1" android:layout_column="1"
+            android:layout_marginTop="4dp"/>
+    <TextView
+            android:text="@string/placeholder_target_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/target_language_textview"
+            android:layout_margin="8dp"
+            android:textSize="12sp"
+            android:textAppearance="?attr/textAppearanceListItem" android:layout_row="1" android:layout_column="3"
+            android:layout_marginTop="4dp"/>
+    <TextView
+            android:text="@string/reqitem_to_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_row="1" android:layout_column="2"
+            android:layout_margin="8dp"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="12sp"
+            android:id="@+id/item_to_textview" android:layout_marginTop="4dp"/>
+</GridLayout>

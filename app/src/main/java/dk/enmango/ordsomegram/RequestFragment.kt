@@ -10,6 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ListView
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,21 +24,26 @@ private const val ARG_PARAM2 = "param2"
 class RequestFragment : Fragment() {
     private val TAG = RequestFragment::class.java.simpleName
     private var sendButton: Button? = null
-    private var textToTranslate: EditText? = null
+    private var textToTranslateBox: EditText? = null
     private var languageOrigin = "engelsk"
     private var languageTarget = "dansk"
+    //var requestHandler: RequestHandler by inject<RequestHandler> { get() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val fragmentView: View = inflater.inflate(R.layout.fragment_request, container, false)
+        sendButton = fragmentView.findViewById(R.id.request_button)
 
-        sendButton = view!!.findViewById(R.id.request_button)
+        textToTranslateBox = fragmentView.findViewById(R.id.request_source_text)
+
         sendButton!!.setOnClickListener{
+            val textToTranslate = textToTranslateBox!!.text
             Log.d(TAG, "onClickListener clicked! textToTranslate: $textToTranslate languageOrigin: $languageOrigin languageTarget: $languageTarget")
         }
-        return inflater.inflate(R.layout.fragment_request, container, false)
+        return fragmentView
     }
 
 }

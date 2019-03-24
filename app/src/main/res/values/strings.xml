@@ -2,8 +2,14 @@
     <!-- Generel strings -->
     <string name="app_name">Ordsomegram</string>
     <string name="title_request">Forespørgsel</string>
-    <string name="title_answered_requests">Besvarede forespørgsler</string>
-    <string name="title_send_answers">Besvar forespørgsler</string>
+    <string name="title_answered_requests">Svar</string>
+    <string name="title_send_answers">Besvar</string>
+
+    <!-- Generel placeholders throughout -->
+    <string name="placeholder_target_language">Dansk</string>
+    <string name="placeholder_source_language">Fransk</string>
+    <string name="placeholder_original_text">Portez ce vieux whisky au juge blond qui fume</string>
+    <string name="placeholder_translated_text">Bring denne gamle whisky til den blonde dommer som ryger.</string>
 
     <!-- Layout: fragment_request.xml -->
     <string name="request_fragment_headline">Hvad skal du have oversat?</string>
@@ -13,14 +19,16 @@
     <string name="request_answer_headline">Her kan du besvare andres forespørgsler</string>
 
     <!-- Layout: fragment_answered_request.xml -->
-    <string name="answered_original_textview">Oprindelig tekst:</string>
+    <string name="answered_original_textview">Teksten er på:</string>
 
-    <string name="answered_original_text">Where in the world is Carmen Santiago?</string> // original user submitted text
-    <string name="answered_target_language_text">Dansk</string> // target language to translate to
-    <string name="answered_source_language_text">Engelsk</string> // source language of the original text
+    <string name="answered_translated_textview">Teksten er oversat til:</string>
 
-    <string name="answered_translated_textview">Oversat tekst:</string>
-    <string name="answered_translated_text">Hvor i alverden er Carmen Santiago?</string> // the translated text
+    <!-- Layout: fragment_requestitem.xml
+    Also uses "answered_target_language_text" and "answered_source_language_text" as placeholders
+        -->
+    <string name="reqitem_to_textview">til</string>
+    <string name="reqitem_id_textview">4</string> // placeholder
+
 
 
 </resources>

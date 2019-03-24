@@ -8,38 +8,44 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-            android:layout_width="395dp"
-            android:layout_height="wrap_content"
-            android:text="@string/answered_original_text"
+            android:text="@string/placeholder_original_text"
             android:id="@+id/answered_original_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/answered_original_textview"
+            android:layout_marginTop="8dp"
+
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"/>
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" app:layout_constraintTop_toBottomOf="@+id/answered_original_textview"/>
     <TextView
-            android:text="@string/answered_source_language_text"
+            android:text="@string/placeholder_source_language"
+            android:id="@+id/answered_source_language_textview"
+
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/answered_source_language_textview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp" android:layout_marginEnd="220dp"
-            android:layout_marginRight="220dp" app:layout_constraintStart_toEndOf="@+id/answered_original_textview"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/answered_original_textview" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"/>
     <TextView
-            android:text="@string/answered_target_language_text"
+            android:text="@string/placeholder_target_language"
+            android:id="@+id/answered_target_language_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/answered_target_language_textview"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
             app:layout_constraintStart_toEndOf="@+id/answered_translated_textview" android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@+id/answered_original_text"/>
     <TextView
-            android:text="@string/answered_translated_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/answered_translated_text"
+            android:text="@string/placeholder_translated_text"
+            android:id="@+id/answered_translated_text"
+            app:layout_constraintTop_toBottomOf="@+id/answered_translated_textview"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:textSize="24sp"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/answered_translated_textview"
+
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>

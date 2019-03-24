@@ -5,26 +5,31 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dk.enmango.ordsomegram.RequestListFragment.OnListFragmentInteractionListener
 import dk.enmango.ordsomegram.model.Request
-import dk.enmango.ordsomegram.model.RequestListFragment
-import dk.enmango.ordsomegram.services.IRequestRepository
+import dk.enmango.ordsomegram.services.RequestHandler
 import dk.enmango.ordsomegram.services.RequestRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.dsl.module
 
-class MainActivity : AppCompatActivity(), RequestListFragment.OnListFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
+
     override fun onListFragmentInteraction(item: Request?) {
-        val args = Bundle()
-        args.putString("param1", "Selected")
-        args.putString("param2", item.toString())
-        findNavController(R.id.nav_host).navigate(R.id.request_dest, args)
+        Log.d("Navigation", item.toString())
+        val action = RequestListFragmentDirections.actionToParams(
+            item!!.textToTranslate,
+            "Oversat tekst!!",
+            item.languageOrigin,
+            item.languageTarget)
+
+        findNavController(R.id.nav_host).navigate(action)
     }
 
-    val requestRepo: RequestRepository = RequestRepository()
-    val requestHandler: RequestHandler = RequestHandler(requestRepo)
+
+    val requestRepo: RequestRepository<Request>? = null
+    val requestHandler: RequestHandler? = null
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -48,13 +53,9 @@ class MainActivity : AppCompatActivity(), RequestListFragment.OnListFragmentInte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startKoin {
-            androidLogger()
-            androidContext(this@MainActivity)
-            modules(appModule)
-        }
         Log.d("MainActivity", "Program started")
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
     }
+
 }
