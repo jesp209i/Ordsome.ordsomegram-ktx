@@ -16,7 +16,7 @@
     <string name="request_fragment_button_text">Send</string>
 
     <!-- Layout: fragment_request_answer.xml -->
-    <string name="request_answer_headline">Her kan du besvare andres forespørgsler</string>
+    <string name="answer_fragment_button_text">send forslag</string>
 
     <!-- Layout: fragment_answered_request.xml -->
     <string name="answered_original_textview">Teksten er på:</string>
@@ -27,8 +27,6 @@
     Also uses "answered_target_language_text" and "answered_source_language_text" as placeholders
         -->
     <string name="reqitem_to_textview">til</string>
-    <string name="reqitem_id_textview">4</string> // placeholder
-
-
+    <string name="reqitem_id_textview">4</string>
 
 </resources>
