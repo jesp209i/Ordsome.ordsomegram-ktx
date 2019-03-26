@@ -10,9 +10,6 @@ import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.RequestHandler
 import dk.enmango.ordsomegram.services.RequestRepository
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 
 class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
