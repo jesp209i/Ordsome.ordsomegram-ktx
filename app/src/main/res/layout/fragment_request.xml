@@ -18,10 +18,9 @@
             android:textSize="24sp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
             tools:layout_editor_absoluteX="20dp"/>
-    <!--<EditText
+    <EditText
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:inputType="textMultiLine"
             android:gravity="start|top"
             android:ems="10"
             android:id="@+id/request_source_text"
@@ -30,31 +29,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintTop_toBottomOf="@+id/textView"
-    >
+            android:inputType="text">
         <requestFocus/>
-    </EditText>-->
-    <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint=""
-            android:gravity="start|top"
-            android:ems="10"
-
-            android:layout_marginTop="8dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="252dp" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintTop_toBottomOf="@+id/textView"
-    style="">
-
-        <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/request_source_text"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        />
-
-    </com.google.android.material.textfield.TextInputLayout>
+    </EditText>
 
     <Button
             android:id="@+id/request_button"
@@ -64,4 +41,40 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+            android:text="@string/request_source_language_textbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/request_source_language_text_textbox"
+            app:layout_constraintEnd_toStartOf="@+id/request_source_language_edittext" android:layout_marginEnd="8dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/request_source_text" android:textSize="20sp"
+            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="16dp" app:layout_constraintHorizontal_bias="0.444"/>
+    <EditText
+            android:layout_height="46dp"
+            android:layout_width="0dp"
+            android:ems="10"
+            android:id="@+id/request_source_language_edittext"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.052"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp" android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/request_source_text"
+            android:inputType="textShortMessage"/>
+    <TextView
+            android:text="@string/request_suggested_language_target_text_textbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/request_suggested_language_target_text_textbox"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+            android:text="@string/request_suggested_language_target_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/request_suggested_language_target_text" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@+id/request_button"
+            android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+            app:layout_constraintStart_toEndOf="@+id/request_suggested_language_target_text_textbox"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
