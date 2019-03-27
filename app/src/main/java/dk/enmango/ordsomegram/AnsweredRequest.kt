@@ -23,6 +23,7 @@ class AnsweredRequest : Fragment() {
     private var transText: String? = null
     private var sourceLang: String? = null
     private var targetLang: String? = null
+    private var translatedText: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

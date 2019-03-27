@@ -4,7 +4,8 @@ data class Request(
     override var id: String?,
     var textToTranslate: String,
     var languageOrigin: String,
-    var languageTarget: String
+    var languageTarget: String,
+    var translatedText: String
 ): IEntity {
     override fun toString(): String {
         return "Request(id=$id, textToTranslate='$textToTranslate', languageOrigin='$languageOrigin', languageTarget='$languageTarget')"
