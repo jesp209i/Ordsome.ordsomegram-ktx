@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
         Log.d("Navigation", item.toString())
         val action = RequestListFragmentDirections.actionToParams(
             item!!.textToTranslate,
-            "Oversat tekst!!",
+            item.translatedText,
             item.languageOrigin,
             item.languageTarget)
 
