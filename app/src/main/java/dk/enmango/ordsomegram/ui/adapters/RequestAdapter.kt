@@ -1,17 +1,19 @@
-package dk.enmango.ordsomegram
+package dk.enmango.ordsomegram.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import dk.enmango.ordsomegram.R
+import dk.enmango.ordsomegram.ui.RequestListFragment
 import dk.enmango.ordsomegram.model.Request
 import kotlinx.android.synthetic.main.fragment_requestitem.view.*
 
 class RequestAdapter(
-        private val mValues: ArrayList<Request>,
-        private val mListener: RequestListFragment.OnListFragmentInteractionListener?,
-        private val appContext: Context
+    private val mValues: ArrayList<Request>,
+    private val mListener: RequestListFragment.OnListFragmentInteractionListener?,
+    private val appContext: Context
         ) : RecyclerView.Adapter<RequestAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener

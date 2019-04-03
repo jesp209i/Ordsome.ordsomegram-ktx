@@ -4,17 +4,17 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
             app:startDestination="@id/request_dest">
 
-    <fragment android:id="@+id/request_dest" android:name="dk.enmango.ordsomegram.RequestFragment"
+    <fragment android:id="@+id/request_dest" android:name="dk.enmango.ordsomegram.ui.RequestFragment"
               android:label="fragment_request" tools:layout="@layout/fragment_request"/>
-    <fragment android:id="@+id/request_list_dest" android:name="dk.enmango.ordsomegram.RequestListFragment"
+    <fragment android:id="@+id/request_list_dest" android:name="dk.enmango.ordsomegram.ui.RequestListFragment"
               android:label="fragment_request_list" tools:layout="@layout/fragment_request_list">
         <action android:id="@+id/action_to_params" app:destination="@+id/answered_request_dest"/>
     </fragment>
-    <fragment android:id="@+id/answered_request_dest" android:name="dk.enmango.ordsomegram.AnsweredRequest"
+    <fragment android:id="@+id/answered_request_dest" android:name="dk.enmango.ordsomegram.ui.AnsweredRequest"
               android:label="fragment_answered_request" tools:layout="@layout/fragment_answered_request">
         <argument android:name="requestId" app:argType="string"/>
 
     </fragment>
-    <fragment android:id="@+id/requestAnswer_dest" android:name="dk.enmango.ordsomegram.RequestAnswerFragment"
+    <fragment android:id="@+id/requestAnswer_dest" android:name="dk.enmango.ordsomegram.ui.RequestAnswerFragment"
               android:label="fragment_request_answer" tools:layout="@layout/fragment_request_answer"/>
 </navigation>

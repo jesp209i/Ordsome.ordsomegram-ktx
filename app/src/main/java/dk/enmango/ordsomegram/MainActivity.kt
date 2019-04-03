@@ -5,10 +5,13 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dk.enmango.ordsomegram.RequestListFragment.OnListFragmentInteractionListener
+import dk.enmango.ordsomegram.ui.RequestListFragment.OnListFragmentInteractionListener
 import dk.enmango.ordsomegram.model.Request
-import dk.enmango.ordsomegram.services.RequestRepository
+import dk.enmango.ordsomegram.services.appModule
+import dk.enmango.ordsomegram.ui.RequestListFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
@@ -19,9 +22,6 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
         findNavController(R.id.nav_host).navigate(action)
     }
-
-
-    val requestRepo: RequestRepository<Request>? = null
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -43,6 +43,14 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // start Koin!
+
+        startKoin {
+            // Android context
+            androidContext(this@MainActivity)
+            // modules
+            modules(appModule)
+        }
         setContentView(R.layout.activity_main)
 
         Log.d("MainActivity", "Program started")

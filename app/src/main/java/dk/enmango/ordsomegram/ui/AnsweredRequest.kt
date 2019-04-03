@@ -1,20 +1,22 @@
-package dk.enmango.ordsomegram
+package dk.enmango.ordsomegram.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Answer
-import dk.enmango.ordsomegram.model.Request
-import dk.enmango.ordsomegram.sample.SampleDataProvider
+import dk.enmango.ordsomegram.services.RequestRepository
+import dk.enmango.ordsomegram.ui.adapters.AnswerAdapter
+import org.koin.android.ext.android.inject
 
 class AnsweredRequest : Fragment() {
+    val requestRepo: RequestRepository by inject()
+
     // TODO: Rename and change types of parameters
     private lateinit var requestId: String
     private lateinit var ans_org_text: TextView
@@ -37,7 +39,7 @@ class AnsweredRequest : Fragment() {
     }
 
     private fun populateProperties() {
-        val request = SampleDataProvider().findById(requestId)
+        val request = requestRepo.findById(requestId)
         //Toast.makeText(context, "$request", Toast.LENGTH_LONG).show()
         origText = request!!.textToTranslate
         answerList.addAll(request.answers)

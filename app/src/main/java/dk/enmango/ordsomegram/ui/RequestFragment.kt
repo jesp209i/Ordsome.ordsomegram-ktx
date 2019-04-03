@@ -1,8 +1,6 @@
-package dk.enmango.ordsomegram
+package dk.enmango.ordsomegram.ui
 
-import android.content.Context
 import android.content.res.Resources
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.ConfigurationCompat
-import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
+import dk.enmango.ordsomegram.R
 import java.util.*
 
 
