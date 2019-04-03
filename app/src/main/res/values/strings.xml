@@ -17,9 +17,8 @@
     <string name="answer_fragment_button_text">send forslag</string>
 
     <!-- Layout: fragment_answered_request.xml -->
-    <string name="answered_original_textview">Teksten er på: %1$s</string>
-
-    <string name="answered_translated_textview">Teksten er oversat til: %1$s</string>
+    <string name="answered_original_textview">Originalteksten er på: %1$s</string>
+    <string name="answered_translated_textview">Forslag er oversat til: %1$s</string>
 
     <!-- Layout: fragment_requestitem.xml
     Also uses "answered_target_language_text" and "answered_source_language_text" as placeholders

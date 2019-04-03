@@ -32,7 +32,21 @@ class SampleDataProvider {
                 "Pumpulivanua",
                 "Finsk",
                 "Dansk",
-                mutableListOf(Answer("3", "Bomuldsvat", "3"), Answer("4", "Hestehest", "3"))
+                mutableListOf(
+                    Answer("3", "Bomuldsvat", "3"),
+                    Answer("4", "Hestehest", "3"),
+                    Answer("17", "Bomuldshat", "3"),
+                    Answer("18", "Hestekattehest", "3"),
+                    Answer("19", "Bomuldsskvat", "3"),
+                    Answer("20", "MisseHestehest", "3"),
+                    Answer("21", "Bomuldsvat", "3"),
+                    Answer("22", "Hestehest", "3"),
+                    Answer("23", "Bomuldsvat", "3"),
+                    Answer("24", "Hestehest", "3"),
+                    Answer("25", "Bomuldsvat", "3"),
+                    Answer("26", "Hestehest", "3"),
+                    Answer("27", "Bomuldsvat", "3"),
+                    Answer("28", "Hestehest", "3"))
             )
         )
         addRequest(Request("4", "Arret", "Canadisk fransk", "Dansk", mutableListOf(Answer("5", "Stop", "4"))))
