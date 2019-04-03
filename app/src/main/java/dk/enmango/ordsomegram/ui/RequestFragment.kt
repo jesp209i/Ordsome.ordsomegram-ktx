@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.ConfigurationCompat
 import dk.enmango.ordsomegram.R
+import dk.enmango.ordsomegram.model.Request
+import dk.enmango.ordsomegram.services.RequestRepository
+import org.koin.android.ext.android.inject
 import java.util.*
 
 
@@ -21,47 +24,58 @@ private const val ARG_PARAM2 = "param2"
 
 class RequestFragment : Fragment() {
     private val TAG = RequestFragment::class.java.simpleName
+    private val requestRepo: RequestRepository by inject()
+
     private var sendButton: Button? = null
     private var textToTranslateBox: EditText? = null
     private var languageOrigin = "engelsk"
-    private var languageTarget = "dansk"
-    private var locale: Locale? = null
+    private var languageTarget = "Dansk"
     private var targetLanguageSuggestionTB: TextView? = null
     private var sourceLangEditText: EditText? = null
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val fragmentView: View = inflater.inflate(R.layout.fragment_request, container, false)
-        sourceLangEditText = fragmentView.findViewById(R.id.request_source_language_edittext)
-        locale = ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0)
-        languageTarget = locale!!.getDisplayName()
-        sendButton = fragmentView.findViewById(R.id.request_button)
-        targetLanguageSuggestionTB = fragmentView.findViewById(R.id.request_suggested_language_target_text)
-        targetLanguageSuggestionTB!!.text = languageTarget
-
-        textToTranslateBox = fragmentView.findViewById(R.id.request_source_text)
+        val view: View = inflater.inflate(R.layout.fragment_request, container, false)
+        setupViews(view)
 
         sendButton!!.setOnClickListener{
-            val textToTranslate = textToTranslateBox!!.text
-            languageOrigin = sourceLangEditText?.text.toString()
-            val toastText = "textToTranslate: $textToTranslate languageOrigin: $languageOrigin languageTarget: $languageTarget"
-            val duration = Toast.LENGTH_LONG
-            Toast.makeText(context,toastText,duration).show()
-            //languageOrigin = request_source_language_edittext
-            Log.d(TAG, "onClickListener clicked! textToTranslate: $textToTranslate languageOrigin: $languageOrigin languageTarget: $languageTarget")
+            requestRepo.addRequest(createRequest())
+
+            Toast.makeText(context,"Din forespørgsel blev oprettet",Toast.LENGTH_LONG).show()
+            Log.d(TAG, "onClickListener clicked!")
+
             clearEdittexts()
         }
-        return fragmentView
+        return view
     }
 
-    fun clearEdittexts(){
+    private fun clearEdittexts(){
         sourceLangEditText?.text?.clear()
         textToTranslateBox?.text?.clear()
+    }
 
+    private fun createRequest():Request{
+        val textToTranslate: String = textToTranslateBox?.text.toString()
+        languageOrigin = sourceLangEditText?.text.toString()
+        val req = Request(null, textToTranslate, languageOrigin,languageTarget)
+        return req
+    }
+
+    private fun setupViews(view:View){
+        sourceLangEditText = view.findViewById(R.id.request_source_language_edittext)
+        sendButton = view.findViewById(R.id.request_button)
+        targetLanguageSuggestionTB = view.findViewById(R.id.request_suggested_language_target_text)
+        textToTranslateBox = view.findViewById(R.id.request_source_text)
+        languageTarget = getLanguageFromSystem()
+        targetLanguageSuggestionTB!!.text = languageTarget
+
+    }
+    private fun getLanguageFromSystem(): String{
+        val locale: Locale = ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0)
+        val langTarget = locale!!.getDisplayName()
+        return langTarget
     }
 
 }

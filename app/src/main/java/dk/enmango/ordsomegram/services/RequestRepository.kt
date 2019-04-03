@@ -10,11 +10,19 @@ class RequestRepository {
         // Sample Static Data
         requestList.addAll(SampleData.list)
     }
-    private fun addRequest(request: Request){
+    fun addRequest(request: Request){
     //    requestHandler.saveRequest(request)
+        val requestCount = requestList.size
+        request.id = requestCount.toString()
         requestList.add(request)
     }
     fun findById( id: String): Request?{
         return requestList.find{ request -> request.id == id }
+    }
+    fun addAnswer(requestId: String, answer: Answer){
+        val request = findById(requestId)
+        val answerCount = request?.answers?.size
+        answer.id = answerCount.toString()
+        request?.answers?.add(answer)
     }
 }
