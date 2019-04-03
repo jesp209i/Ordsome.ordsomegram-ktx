@@ -1,5 +1,6 @@
 package dk.enmango.ordsomegram
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,8 @@ import kotlinx.android.synthetic.main.fragment_requestitem.view.*
 
 class RequestAdapter(
         private val mValues: ArrayList<Request>,
-        private val mListener: RequestListFragment.OnListFragmentInteractionListener?
+        private val mListener: RequestListFragment.OnListFragmentInteractionListener?,
+        private val appContext: Context
         ) : RecyclerView.Adapter<RequestAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
@@ -27,11 +29,10 @@ class RequestAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.itemAnswers.text = "${mValues.get(position).answers.size}."
-        holder.itemOriginalText.text = mValues.get(position).textToTranslate
-        holder.itemSourceLanguage.text = mValues.get(position).languageOrigin
-        holder.itemTargetLanguage.text = mValues.get(position).languageTarget
-
+        val srcLanToTgtLan = appContext.getString(R.string.lang_to_lang,item.languageOrigin,item.languageTarget)
+        holder.itemAnswers.text = item.answers.size.toString()
+        holder.itemOriginalText.text = item.textToTranslate
+        holder.itemSourceToTargetLanguage.text = srcLanToTgtLan
         with(holder.itemView) {
             tag = item
             setOnClickListener(mOnClickListener)
@@ -43,8 +44,7 @@ class RequestAdapter(
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemAnswers = view.no_of_answers
         val itemOriginalText = view.original_text
-        val itemSourceLanguage = view.source_language_textview
-        val itemTargetLanguage = view.target_language_textview
+        val itemSourceToTargetLanguage = view.source_to_target_language_textview
         override fun toString(): String {
             return super.toString() + " '" + itemOriginalText + "'"
         }

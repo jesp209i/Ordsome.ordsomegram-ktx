@@ -40,7 +40,7 @@ class RequestListFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = RequestAdapter(requestList, listener)
+                adapter = RequestAdapter(requestList, listener, context)
             }
         }
         return view
