@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import dk.enmango.ordsomegram.model.Answer
+import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.sample.SampleDataProvider
 
 class AnsweredRequest : Fragment() {
@@ -20,6 +23,7 @@ class AnsweredRequest : Fragment() {
     private var transText: String? = null
     private var sourceLang: String? = null
     private var targetLang: String? = null
+    val answerList : ArrayList<Answer> = arrayListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +39,7 @@ class AnsweredRequest : Fragment() {
         val request = SampleDataProvider().findById(requestId)
         Toast.makeText(context, "$request", Toast.LENGTH_LONG).show()
         origText = request!!.textToTranslate
+        answerList.addAll(request.answers)
         transText = request.answers[0].translation
         sourceLang = request.languageOrigin
         targetLang = request.languageTarget
@@ -46,6 +51,8 @@ class AnsweredRequest : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_answered_request, container, false)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.answerRecyclerView)
+        recyclerView.adapter = AnswerAdapter(answerList, context!!)
         assignViews(view)
         setViewValues()
         return view
@@ -58,8 +65,6 @@ class AnsweredRequest : Fragment() {
         ans_source_lan_tv.text = sourceLanguage
         ans_target_lan_tv.text = targetLanguage
         ans_trans_text.text = transText
-
-
     }
 
     fun assignViews(view:View){

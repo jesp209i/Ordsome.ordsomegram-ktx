@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,6 +34,12 @@ var answerButton: Button? = null
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_request_answer, container, false)
         transTextField = view.findViewById(R.id.answered_translated_text)
+        val sourceLangTV = view.findViewById<TextView>(R.id.answered_original_textview)
+        val targetLangTV = view.findViewById<TextView>(R.id.answered_translated_textview)
+        val sourceTxt = context!!.getString(R.string.answered_original_textview, "Fransk")
+        val targetTxt = context!!.getString(R.string.answered_translated_textview, "Dansk")
+        sourceLangTV.text = sourceTxt
+        targetLangTV.text = targetTxt
         transText = transTextField!!.text.toString()
         transTextField!!.text.clear()
         answerButton = view.findViewById(R.id.answer_button)
