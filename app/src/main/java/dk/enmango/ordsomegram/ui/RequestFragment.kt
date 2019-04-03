@@ -74,7 +74,7 @@ class RequestFragment : Fragment() {
     }
     private fun getLanguageFromSystem(): String{
         val locale: Locale = ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0)
-        val langTarget = locale!!.getDisplayName()
+        val langTarget = locale.getDisplayName()
         return langTarget
     }
 

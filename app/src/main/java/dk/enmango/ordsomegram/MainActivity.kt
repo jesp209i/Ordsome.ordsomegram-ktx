@@ -5,15 +5,20 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dk.enmango.ordsomegram.ui.RequestListFragment.OnListFragmentInteractionListener
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.appModule
+import dk.enmango.ordsomegram.ui.AnswersFragment
+import dk.enmango.ordsomegram.ui.RequestListFragment
 import dk.enmango.ordsomegram.ui.RequestListFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), AnswersFragment.OnAnswerListFragmentInteractionListener,
+    RequestListFragment.OnListFragmentInteractionListener {
+    override fun onAnswerListFragmentInteraction(item: Request?) {
+        Log.d("Navigation", item.toString())
+    }
 
     override fun onListFragmentInteraction(item: Request?) {
         Log.d("Navigation", item.toString())
@@ -34,7 +39,7 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_send_answers -> {
-                findNavController(R.id.nav_host).navigate(R.id.requestAnswer_dest)
+                findNavController(R.id.nav_host).navigate(R.id.answers_dest)
                 return@OnNavigationItemSelectedListener true
             }
         }

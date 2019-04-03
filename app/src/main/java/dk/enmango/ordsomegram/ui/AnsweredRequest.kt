@@ -15,9 +15,8 @@ import dk.enmango.ordsomegram.ui.adapters.AnswerAdapter
 import org.koin.android.ext.android.inject
 
 class AnsweredRequest : Fragment() {
-    val requestRepo: RequestRepository by inject()
+    private val requestRepo: RequestRepository by inject()
 
-    // TODO: Rename and change types of parameters
     private lateinit var requestId: String
     private lateinit var ans_org_text: TextView
     private lateinit var ans_trans_text: TextView
@@ -26,7 +25,7 @@ class AnsweredRequest : Fragment() {
     private var origText: String? = null
     private var sourceLang: String? = null
     private var targetLang: String? = null
-    val answerList : ArrayList<Answer> = arrayListOf()
+    private val answerList : ArrayList<Answer> = arrayListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,12 +52,8 @@ class AnsweredRequest : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_answered_request, container, false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.answerRecyclerView)
-        if (recyclerView is RecyclerView) {
-
-                recyclerView.layoutManager =  LinearLayoutManager(context)
-
-                recyclerView.adapter = AnswerAdapter(answerList, context!!)
-            }
+        recyclerView.layoutManager =  LinearLayoutManager(context)
+        recyclerView.adapter = AnswerAdapter(answerList, context!!)
         assignViews(view)
         setViewValues()
         return view
