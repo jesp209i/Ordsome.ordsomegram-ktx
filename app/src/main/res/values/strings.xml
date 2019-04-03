@@ -8,7 +8,7 @@
     <!-- Generel placeholders throughout -->
     <string name="placeholder_target_language">Dansk</string>
     <string name="placeholder_source_language">Fransk</string>
-    <string name="placeholder_original_text">Portez ce vieux whisky au juge blond qui fume</string>
+    <string name="placeholder_original_text">Portez ce vieux whisky au juge blond qui fume.</string>
     <string name="placeholder_translated_text">Bring denne gamle whisky til den blonde dommer som ryger.</string>
 
     <!-- Layout: fragment_request.xml -->

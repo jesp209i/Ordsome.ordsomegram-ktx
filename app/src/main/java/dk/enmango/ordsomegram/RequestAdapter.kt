@@ -27,7 +27,7 @@ class RequestAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.itemNumber.text = "${mValues.get(position).id}."
+        holder.itemAnswers.text = "${mValues.get(position).answers.size}."
         holder.itemOriginalText.text = mValues.get(position).textToTranslate
         holder.itemSourceLanguage.text = mValues.get(position).languageOrigin
         holder.itemTargetLanguage.text = mValues.get(position).languageTarget
@@ -41,7 +41,7 @@ class RequestAdapter(
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val itemNumber = view.item_number
+        val itemAnswers = view.no_of_answers
         val itemOriginalText = view.original_text
         val itemSourceLanguage = view.source_language_textview
         val itemTargetLanguage = view.target_language_textview

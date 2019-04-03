@@ -7,7 +7,6 @@ import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dk.enmango.ordsomegram.RequestListFragment.OnListFragmentInteractionListener
 import dk.enmango.ordsomegram.model.Request
-import dk.enmango.ordsomegram.services.RequestHandler
 import dk.enmango.ordsomegram.services.RequestRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,17 +15,13 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
     override fun onListFragmentInteraction(item: Request?) {
         Log.d("Navigation", item.toString())
         val action = RequestListFragmentDirections.actionToParams(
-            item!!.textToTranslate,
-            item.translatedText,
-            item.languageOrigin,
-            item.languageTarget)
+            item!!.id!!)
 
         findNavController(R.id.nav_host).navigate(action)
     }
 
 
     val requestRepo: RequestRepository<Request>? = null
-    val requestHandler: RequestHandler? = null
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {

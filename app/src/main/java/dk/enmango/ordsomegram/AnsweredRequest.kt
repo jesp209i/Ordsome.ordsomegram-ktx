@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.sample.SampleDataProvider
@@ -23,18 +24,25 @@ class AnsweredRequest : Fragment() {
     private var transText: String? = null
     private var sourceLang: String? = null
     private var targetLang: String? = null
-    private var translatedText: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             val args = AnsweredRequestArgs.fromBundle(it)
-            origText = args.originalText
-            transText = args.translatedText
-            sourceLang = args.sourceLang
-            targetLang = args.targetLang
+            requestId = args.requestId
         }
+        populateProperties()
+    }
+
+    private fun populateProperties() {
+        val request = SampleDataProvider().findById(requestId)
+        Toast.makeText(context, "$request", Toast.LENGTH_LONG).show()
+        origText = request!!.textToTranslate
+        transText = request.answers[0].translation
+        sourceLang = request.languageOrigin
+        targetLang = request.languageTarget
+
     }
 
     override fun onCreateView(

@@ -12,10 +12,8 @@
     </fragment>
     <fragment android:id="@+id/answered_request_dest" android:name="dk.enmango.ordsomegram.AnsweredRequest"
               android:label="fragment_answered_request" tools:layout="@layout/fragment_answered_request">
-        <argument android:name="originalText" app:argType="string"/>
-        <argument android:name="translatedText" app:argType="string"/>
-        <argument android:name="sourceLang" app:argType="string"/>
-        <argument android:name="targetLang" app:argType="string"/>
+        <argument android:name="requestId" app:argType="string"/>
+
     </fragment>
     <fragment android:id="@+id/requestAnswer_dest" android:name="dk.enmango.ordsomegram.RequestAnswerFragment"
               android:label="fragment_request_answer" tools:layout="@layout/fragment_request_answer"/>
