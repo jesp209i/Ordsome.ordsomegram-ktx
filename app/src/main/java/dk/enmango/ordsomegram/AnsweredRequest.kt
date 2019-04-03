@@ -1,7 +1,5 @@
 package dk.enmango.ordsomegram
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.navigation.fragment.navArgs
-import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.sample.SampleDataProvider
 
 class AnsweredRequest : Fragment() {
@@ -50,16 +46,27 @@ class AnsweredRequest : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_answered_request, container, false)
-        ans_org_text = view.findViewById<TextView>(R.id.answered_original_text)
-        ans_trans_text = view.findViewById<TextView>(R.id.answered_translated_text)
-        ans_source_lan_tv = view.findViewById<TextView>(R.id.answered_source_language_textview)
-        ans_target_lan_tv = view.findViewById<TextView>(R.id.answered_target_language_textview)
+        assignViews(view)
+        setViewValues()
+        return view
+    }
+
+    fun setViewValues(){
+        val sourceLanguage = getString(R.string.answered_original_textview, sourceLang)
+        val targetLanguage = getString(R.string.answered_translated_textview, targetLang)
         ans_org_text.text = origText
-        ans_source_lan_tv.text = sourceLang
-        ans_target_lan_tv.text = targetLang
+        ans_source_lan_tv.text = sourceLanguage
+        ans_target_lan_tv.text = targetLanguage
         ans_trans_text.text = transText
 
-        return view
+
+    }
+
+    fun assignViews(view:View){
+        ans_org_text = view.findViewById<TextView>(R.id.answered_original_text)
+        ans_trans_text = view.findViewById<TextView>(R.id.answered_translated_text)
+        ans_source_lan_tv = view.findViewById<TextView>(R.id.answered_original_textview)
+        ans_target_lan_tv = view.findViewById<TextView>(R.id.answered_translated_textview)
     }
 
 }
