@@ -21,7 +21,6 @@
     </fragment>
     <fragment android:id="@+id/answers_dest" android:name="dk.enmango.ordsomegram.ui.AnswersFragment"
               android:label="fragment_answers_list" tools:layout="@layout/fragment_answers_list">
-        <action android:id="@+id/action_answersFragment_to_requestAnswer_dest"
-                app:destination="@id/requestAnswer_dest"/>
+        <action android:id="@+id/action_to_req_answer" app:destination="@id/requestAnswer_dest"/>
     </fragment>
 </navigation>

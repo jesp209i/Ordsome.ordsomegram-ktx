@@ -31,5 +31,6 @@
     <string name="srclang_to_tgtlang">Fransk til Dansk</string>
     <string name="placeholder_source_language">Fransk</string>
     <string name="placeholder_target_language">Dansk</string>
+    <string name="answered_no_of_answers">Antal oversættelser: %1$s</string>
 
 </resources>

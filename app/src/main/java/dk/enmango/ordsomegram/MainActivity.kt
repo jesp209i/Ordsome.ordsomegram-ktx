@@ -8,6 +8,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.appModule
 import dk.enmango.ordsomegram.ui.AnswersFragment
+import dk.enmango.ordsomegram.ui.AnswersFragmentDirections
 import dk.enmango.ordsomegram.ui.RequestListFragment
 import dk.enmango.ordsomegram.ui.RequestListFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,13 +18,18 @@ import org.koin.core.context.startKoin
 class MainActivity : AppCompatActivity(), AnswersFragment.OnAnswerListFragmentInteractionListener,
     RequestListFragment.OnListFragmentInteractionListener {
     override fun onAnswerListFragmentInteraction(item: Request?) {
+
         Log.d("Navigation", item.toString())
+        val action = AnswersFragmentDirections.actionToReqAnswer(
+            item?.id!!
+        )
+        findNavController(R.id.nav_host).navigate(action)
     }
 
     override fun onListFragmentInteraction(item: Request?) {
         Log.d("Navigation", item.toString())
         val action = RequestListFragmentDirections.actionToParams(
-            item!!.id!!)
+            item?.id!!)
 
         findNavController(R.id.nav_host).navigate(action)
     }

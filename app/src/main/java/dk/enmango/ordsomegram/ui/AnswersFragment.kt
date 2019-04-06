@@ -41,7 +41,7 @@ class AnswersFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_answers_list, container, false)
         if (view is RecyclerView) {
                 view.layoutManager = LinearLayoutManager(context)
-                view.adapter = AnswerListAdapter(list, listenerAnswer)
+                view.adapter = AnswerListAdapter(list, listenerAnswer, context!!)
         }
         return view
     }

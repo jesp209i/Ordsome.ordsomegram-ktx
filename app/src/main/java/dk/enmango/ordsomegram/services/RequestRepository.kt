@@ -19,8 +19,8 @@ class RequestRepository {
     fun findById( id: String): Request?{
         return requestList.find{ request -> request.id == id }
     }
-    fun addAnswer(requestId: String, answer: Answer){
-        val request = findById(requestId)
+    fun addAnswer(answer: Answer){
+        val request = findById(answer.requestId)
         val answerCount = request?.answers?.size
         answer.id = answerCount.toString()
         request?.answers?.add(answer)

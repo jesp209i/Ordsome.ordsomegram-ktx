@@ -9,49 +9,100 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import dk.enmango.ordsomegram.R
+import dk.enmango.ordsomegram.model.Answer
+import dk.enmango.ordsomegram.services.RequestRepository
+import org.koin.android.ext.android.inject
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class RequestAnswerFragment : Fragment() {
-var answerButton: Button? = null
-    var transText: String? = null
+    private val requestRepo: RequestRepository by inject()
+
+    private lateinit var requestId: String
+    private var origText: String? = null
+    private var sourceLang: String? = null
+    private var targetLang: String? = null
+    private var noOfAnswers: Int? = null
+    private var noOfAnswersString: String? = null
+
+    var answerButton: Button? = null
     var transTextField: EditText? = null
-    var noOfClicks: Int = 0
+    var originalTextField: TextView? = null
+    var sourceLangTV: TextView? = null
+    var targetLangTV: TextView? = null
+    var noOfAnsersTV: TextView? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            val args = RequestAnswerFragmentArgs.fromBundle(it)
+            requestId = args.requestId
+        }
+        populateProperties()
+
+    }
+
+    private fun populateProperties() {
+        val request = requestRepo.findById(requestId)
+        //Toast.makeText(context, "$request", Toast.LENGTH_LONG).show()
+        origText = request!!.textToTranslate
+        noOfAnswers = request.answers.size
+        noOfAnswersString = context!!.getString(R.string.answered_no_of_answers, noOfAnswers.toString())
+        sourceLang = context!!.getString(R.string.answered_original_textview,request.languageOrigin)
+        targetLang = context!!.getString(R.string.answered_translated_textview,request.languageTarget)
+    }
+
+    private fun assignViews(view:View){
+        transTextField = view.findViewById(R.id.answered_translated_text)
+        originalTextField = view.findViewById(R.id.answered_original_text)
+        sourceLangTV = view.findViewById(R.id.answered_original_textview)
+        targetLangTV = view.findViewById(R.id.answered_translated_textview)
+        noOfAnsersTV = view.findViewById(R.id.answered_no_of_answers)
+        answerButton = view.findViewById(R.id.answer_button)
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_request_answer, container, false)
-        transTextField = view.findViewById(R.id.answered_translated_text)
-        val sourceLangTV = view.findViewById<TextView>(R.id.answered_original_textview)
-        val targetLangTV = view.findViewById<TextView>(R.id.answered_translated_textview)
-        val sourceTxt = context!!.getString(R.string.answered_original_textview, "Fransk")
-        val targetTxt = context!!.getString(R.string.answered_translated_textview, "Dansk")
-        sourceLangTV.text = sourceTxt
-        targetLangTV.text = targetTxt
-        transText = transTextField!!.text.toString()
-        transTextField!!.text.clear()
-        answerButton = view.findViewById(R.id.answer_button)
+
+        assignViews(view)
+
+        sourceLangTV?.text = sourceLang
+        targetLangTV?.text = targetLang
+        originalTextField?.text = origText
+        noOfAnsersTV?.text = noOfAnswersString
+        transTextField?.text?.clear()
+
         answerButton!!.setOnClickListener{
-            noOfClicks++
-            if (noOfClicks%2 == 0) {
-                transTextField!!.text.clear()
-            }else{
-                transTextField!!.setText(transText)
+            if (transTextField?.text.isNullOrBlank() ){
+                Toast.makeText(context, "Please write a translation", Toast.LENGTH_LONG).show()
+            }
+            else {
+                val translation: String = transTextField?.text.toString()
+                Toast.makeText(context, "Translation send: $translation", Toast.LENGTH_LONG).show()
+                saveAnswer(translation)
+                noOfAnswers?.plus(1)
+                refreshFragment()
             }
         }
 
         return view
+    }
+    private fun refreshFragment(){
+        transTextField?.text?.clear()
+        noOfAnswersString = context!!.getString(R.string.answered_no_of_answers, noOfAnswers.toString())
+        noOfAnsersTV?.text = noOfAnswersString
+    }
+
+    private fun saveAnswer(answerString: String){
+        val answer: Answer = Answer(null, answerString, requestId)
+        requestRepo.addAnswer(answer)
     }
 
 
