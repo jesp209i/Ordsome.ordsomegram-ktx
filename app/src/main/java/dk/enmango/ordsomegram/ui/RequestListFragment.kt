@@ -1,4 +1,4 @@
-package dk.enmango.ordsomegram
+package dk.enmango.ordsomegram.ui
 
 
 import android.content.Context
@@ -10,10 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Request
-import dk.enmango.ordsomegram.sample.SampleDataProvider
-
-import kotlinx.android.synthetic.main.fragment_request_list.*
+import dk.enmango.ordsomegram.services.RequestRepository
+import dk.enmango.ordsomegram.ui.adapters.RequestAdapter
+import org.koin.android.ext.android.inject
 
 
 class RequestListFragment : Fragment() {
@@ -22,11 +23,12 @@ class RequestListFragment : Fragment() {
 
     private var listener: OnListFragmentInteractionListener? = null
 
-    var requestList : ArrayList<Request> = SampleDataProvider().requestList as ArrayList<Request>
+    val requestRepo: RequestRepository by inject()
+
+    var requestList : ArrayList<Request> = requestRepo.requestList as ArrayList<Request>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView( inflater: LayoutInflater,
