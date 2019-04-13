@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.ConfigurationCompat
 import dk.enmango.ordsomegram.R
+import dk.enmango.ordsomegram.model.DTO.CreateRequest
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.RequestRepository
 import org.koin.android.ext.android.inject
@@ -56,10 +57,10 @@ class RequestFragment : Fragment() {
         textToTranslateBox?.text?.clear()
     }
 
-    private fun createRequest():Request{
+    private fun createRequest(): CreateRequest {
         val textToTranslate: String = textToTranslateBox?.text.toString()
         languageOrigin = sourceLangEditText?.text.toString()
-        val req = Request(null, textToTranslate, languageOrigin,languageTarget)
+        val req = CreateRequest(textToTranslate, languageOrigin,languageTarget)
         return req
     }
 

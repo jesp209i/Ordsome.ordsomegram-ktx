@@ -1,6 +1,8 @@
 package dk.enmango.ordsomegram.services
 
 import dk.enmango.ordsomegram.model.Answer
+import dk.enmango.ordsomegram.model.DTO.CreateAnswer
+import dk.enmango.ordsomegram.model.DTO.CreateRequest
 import dk.enmango.ordsomegram.model.Request
 
 
@@ -10,19 +12,18 @@ class RequestRepository {
         // Sample Static Data
         requestList.addAll(SampleData.list)
     }
-    fun addRequest(request: Request){
-    //    requestHandler.saveRequest(request)
+    fun addRequest(request: CreateRequest){
         val requestCount = requestList.size
-        request.id = requestCount.toString()
-        requestList.add(request)
+        val newRequest = Request(requestCount,request.textToTranslate,request.languageOrigin,request.languageTarget)
+        requestList.add(newRequest)
     }
-    fun findById( id: String): Request?{
+    fun findById( id: Int): Request?{
         return requestList.find{ request -> request.id == id }
     }
-    fun addAnswer(answer: Answer){
+    fun addAnswer(answer: CreateAnswer){
         val request = findById(answer.requestId)
         val answerCount = request?.answers?.size
-        answer.id = answerCount.toString()
-        request?.answers?.add(answer)
+        val newAnswer = Answer(answerCount!!,answer.translation,answer.requestId)
+        request?.answers?.add(newAnswer)
     }
 }
