@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Answer
+import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.services.RequestRepository
 import org.koin.android.ext.android.inject
 
@@ -19,7 +20,7 @@ import org.koin.android.ext.android.inject
 class RequestAnswerFragment : Fragment() {
     private val requestRepo: RequestRepository by inject()
 
-    private lateinit var requestId: String
+    private var requestId: Int? = null
     private var origText: String? = null
     private var sourceLang: String? = null
     private var targetLang: String? = null
@@ -45,7 +46,7 @@ class RequestAnswerFragment : Fragment() {
     }
 
     private fun populateProperties() {
-        val request = requestRepo.findById(requestId)
+        val request = requestRepo.findById(requestId!!)
         //Toast.makeText(context, "$request", Toast.LENGTH_LONG).show()
         origText = request!!.textToTranslate
         noOfAnswers = request.answers.size
@@ -101,7 +102,7 @@ class RequestAnswerFragment : Fragment() {
     }
 
     private fun saveAnswer(answerString: String){
-        val answer: Answer = Answer(null, answerString, requestId)
+        val answer: CreateAnswer = CreateAnswer(answerString, requestId!!)
         requestRepo.addAnswer(answer)
     }
 

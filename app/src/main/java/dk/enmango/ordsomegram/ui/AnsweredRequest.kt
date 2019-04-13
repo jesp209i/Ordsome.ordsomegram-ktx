@@ -17,7 +17,7 @@ import org.koin.android.ext.android.inject
 class AnsweredRequest : Fragment() {
     private val requestRepo: RequestRepository by inject()
 
-    private lateinit var requestId: String
+    private var requestId: Int? = null
     private lateinit var ans_org_text: TextView
     private lateinit var ans_trans_text: TextView
     private lateinit var ans_source_lan_tv: TextView
@@ -38,7 +38,7 @@ class AnsweredRequest : Fragment() {
     }
 
     private fun populateProperties() {
-        val request = requestRepo.findById(requestId)
+        val request = requestRepo.findById(requestId!!)
         //Toast.makeText(context, "$request", Toast.LENGTH_LONG).show()
         origText = request!!.textToTranslate
         answerList.addAll(request.answers)
