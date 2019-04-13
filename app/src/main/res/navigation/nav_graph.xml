@@ -12,12 +12,12 @@
     </fragment>
     <fragment android:id="@+id/answered_request_dest" android:name="dk.enmango.ordsomegram.ui.AnsweredRequest"
               android:label="fragment_answered_request" tools:layout="@layout/fragment_answered_request">
-        <argument android:name="requestId" app:argType="string"/>
+        <argument android:name="requestId" app:argType="integer"/>
 
     </fragment>
     <fragment android:id="@+id/requestAnswer_dest" android:name="dk.enmango.ordsomegram.ui.RequestAnswerFragment"
               android:label="fragment_request_answer" tools:layout="@layout/fragment_request_answer">
-        <argument android:name="requestId" app:argType="string"/>
+        <argument android:name="requestId" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/answers_dest" android:name="dk.enmango.ordsomegram.ui.AnswersFragment"
               android:label="fragment_answers_list" tools:layout="@layout/fragment_answers_list">
