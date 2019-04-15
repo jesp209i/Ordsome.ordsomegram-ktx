@@ -26,7 +26,6 @@ private const val ARG_PARAM2 = "param2"
 class RequestFragment : Fragment() {
     private val TAG = RequestFragment::class.java.simpleName
     private val requestRepo: RequestRepository by inject()
-
     private var sendButton: Button? = null
     private var textToTranslateBox: EditText? = null
     private var languageOrigin = "engelsk"
