@@ -21,7 +21,7 @@ class AnswerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.itemAnswer.text = item.translation
+        holder.itemAnswer.text = item.textTranslated
     }
 
     override fun getItemCount(): Int = mValues.size
