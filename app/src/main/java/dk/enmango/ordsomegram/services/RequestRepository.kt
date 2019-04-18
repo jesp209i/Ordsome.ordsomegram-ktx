@@ -1,14 +1,6 @@
 package dk.enmango.ordsomegram.services
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley.newRequestQueue
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import dk.enmango.ordsomegram.model.Answer
 import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.model.DTO.CreateRequest
@@ -16,6 +8,7 @@ import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.Interfaces.ServerCallback
 
 class RequestRepository(val apiController: APIController): ServerCallback {
+    private val TAG = RequestRepository::class.java.simpleName
     val requestList: MutableList<Request> = mutableListOf<Request>()
 
     init {
@@ -27,20 +20,22 @@ class RequestRepository(val apiController: APIController): ServerCallback {
         //val requestCount = requestList.size
         //val newRequest = Request(requestCount,request.textToTranslate,request.languageOrigin,request.languageTarget)
         //requestList.add(newRequest)
-        apiController.addRequest(request)
+        apiController.addToServer(request,this)
     }
     fun findById( id: Int): Request?{
         return requestList.find{ request -> request.id == id }
     }
     fun addAnswer(answer: CreateAnswer){
-        val request = findById(answer.requestId)
-        val answerCount = request?.answers?.size
-        val newAnswer = Answer(answerCount!!,answer.translation,answer.requestId)
-        request.answers.add(newAnswer)
+        // val request = findById(answer.requestId)
+        // val answerCount = request?.answers?.size
+        // val newAnswer = Answer(answerCount!!,answer.textTranslated,answer.requestId)
+        // request.answers.add(newAnswer)
+        apiController.addToServer(answer,this)
     }
     override fun onSuccessRequestList(response: MutableList<Request>) {
         requestList.clear()
         requestList.addAll(response)
+        Log.d(TAG,"requestList refreshed from server")
     }
 
 }

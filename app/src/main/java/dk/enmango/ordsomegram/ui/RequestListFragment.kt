@@ -12,12 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Request
+import dk.enmango.ordsomegram.services.Interfaces.ServerCallback
 import dk.enmango.ordsomegram.services.RequestRepository
 import dk.enmango.ordsomegram.ui.adapters.RequestAdapter
 import org.koin.android.ext.android.inject
 
 
-class RequestListFragment : Fragment() {
+class RequestListFragment : Fragment(), ServerCallback{
+    override fun onSuccessRequestList(response: MutableList<Request>) {
+        requestList = requestRepo.requestList as ArrayList<Request>
+    }
 
     private var columnCount = 1
 
