@@ -5,9 +5,10 @@ import dk.enmango.ordsomegram.model.Answer
 import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.model.DTO.CreateRequest
 import dk.enmango.ordsomegram.model.Request
-import dk.enmango.ordsomegram.services.Interfaces.ServerCallback
+import dk.enmango.ordsomegram.services.Interfaces.AnswerCallback
+import dk.enmango.ordsomegram.services.Interfaces.RequestCallback
 
-class RequestRepository(val apiController: APIController): ServerCallback {
+class RequestRepository(val apiController: APIController): RequestCallback, AnswerCallback {
     private val TAG = RequestRepository::class.java.simpleName
     val requestList: MutableList<Request> = mutableListOf<Request>()
 
@@ -23,7 +24,7 @@ class RequestRepository(val apiController: APIController): ServerCallback {
         apiController.addToServer(request,this)
     }
     fun findById( id: Int): Request?{
-        return requestList.find{ request -> request.id == id }
+        return requestList.find{ request -> request.requestId == id }
     }
     fun addAnswer(answer: CreateAnswer){
         // val request = findById(answer.requestId)
@@ -32,10 +33,24 @@ class RequestRepository(val apiController: APIController): ServerCallback {
         // request.answers.add(newAnswer)
         apiController.addToServer(answer,this)
     }
+    fun getAnswers(requestId: Int, answerCallback: AnswerCallback) {
+        apiController.getAnswers(requestId, answerCallback)
+    }
     override fun onSuccessRequestList(response: MutableList<Request>) {
         requestList.clear()
         requestList.addAll(response)
         Log.d(TAG,"requestList refreshed from server")
     }
+    override fun onSuccessAnswerList(requestId: Int, response: MutableList<Answer>) {
+        val request = findById(requestId)
+        request?.let {
+            it.answers.clear()
+            it.answers.addAll(response)
+        }
+    }
+    fun getRequests(callback: RequestCallback?){
+        apiController.getRequests(callback)
+    }
+
 
 }

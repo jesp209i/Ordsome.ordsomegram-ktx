@@ -11,7 +11,6 @@ import android.widget.*
 import androidx.core.os.ConfigurationCompat
 import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.DTO.CreateRequest
-import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.RequestRepository
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -24,6 +23,7 @@ private const val ARG_PARAM2 = "param2"
 
 
 class RequestFragment : Fragment() {
+    private val fragmentTitle: String = "Ny forespørgsel"
     private val TAG = RequestFragment::class.java.simpleName
     private val requestRepo: RequestRepository by inject()
     private var sendButton: Button? = null
@@ -37,7 +37,8 @@ class RequestFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_request, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_new_request, container, false)
+        activity?.title = fragmentTitle
         setupViews(view)
 
         sendButton!!.setOnClickListener{

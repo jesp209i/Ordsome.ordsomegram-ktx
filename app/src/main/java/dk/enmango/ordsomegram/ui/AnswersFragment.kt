@@ -12,6 +12,7 @@ import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.RequestRepository
 import dk.enmango.ordsomegram.ui.adapters.AnswerListAdapter
+import dk.enmango.ordsomegram.ui.interfaces.OnListFragmentInteractionListener
 import org.koin.android.ext.android.inject
 
 /**
@@ -20,14 +21,14 @@ import org.koin.android.ext.android.inject
  * [AnswersFragment.OnAnswerListFragmentInteractionListener] interface.
  */
 class AnswersFragment : Fragment() {
-
+    private val fragmentTitle: String = "Besvar forespørgsler"
     val requestRepo: RequestRepository by inject()
 
     val list: ArrayList<Request> = requestRepo.requestList as ArrayList<Request>
     // TODO: Customize parameters
     private var columnCount = 1
 
-    private var listenerAnswer: OnAnswerListFragmentInteractionListener? = null
+    private var listenerAnswer: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,8 @@ class AnswersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_answers_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_request_detail_answer_list, container, false)
+        activity?.title = fragmentTitle
         if (view is RecyclerView) {
                 view.layoutManager = LinearLayoutManager(context)
                 view.adapter = AnswerListAdapter(list, listenerAnswer, context!!)
@@ -48,7 +50,7 @@ class AnswersFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnAnswerListFragmentInteractionListener) {
+        if (context is OnListFragmentInteractionListener) {
             listenerAnswer = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnAnswerListFragmentInteractionListener")
@@ -71,8 +73,5 @@ class AnswersFragment : Fragment() {
      * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
      * for more information.
      */
-    interface OnAnswerListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onAnswerListFragmentInteraction(item: Request?)
-    }
+
 }

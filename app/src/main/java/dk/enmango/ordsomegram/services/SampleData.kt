@@ -2,7 +2,7 @@ package dk.enmango.ordsomegram.services
 
 import dk.enmango.ordsomegram.model.Answer
 import dk.enmango.ordsomegram.model.Request
-
+/*
 object SampleData{
     val list: MutableList<Request> = mutableListOf()
     init{
@@ -174,4 +174,4 @@ object SampleData{
     private fun addRequest(req: Request){
         list.add(req)
     }
-}
+}*/

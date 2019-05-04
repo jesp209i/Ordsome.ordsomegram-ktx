@@ -2,13 +2,14 @@ package dk.enmango.ordsomegram.services
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dk.enmango.ordsomegram.model.Answer
 import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.model.DTO.CreateRequest
 import dk.enmango.ordsomegram.model.Request
 import org.json.JSONObject
 
 object JSONConvert {
-    fun jsonToList(string: String) : MutableList<Request> {
+    fun jsonToRequestList(string: String): MutableList<Request> {
         val gson: Gson = Gson()
         val listType = object : TypeToken<MutableList<Request>>() { }.type
         val realRequests: MutableList<Request> = gson.fromJson(string,listType)
@@ -26,5 +27,12 @@ object JSONConvert {
         jsonObject.put("requestId", model.requestId)
         jsonObject.put("textTranslated", model.textTranslated)
         return jsonObject
+    }
+
+    fun jsonToAnswerList(string: String): MutableList<Answer> {
+        val gson: Gson = Gson()
+        val listType = object : TypeToken<MutableList<Answer>>() { }.type
+        val realAnswers: MutableList<Answer> = gson.fromJson(string,listType)
+        return realAnswers
     }
 }

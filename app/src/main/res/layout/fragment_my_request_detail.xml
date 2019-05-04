@@ -4,7 +4,7 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   tools:context=".ui.AnsweredRequest" android:id="@+id/frameLayout2">
+                                                   tools:context=".ui.MyRequestDetail" android:id="@+id/frameLayout2">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -41,7 +41,7 @@
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="16dp" android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp" android:layout_marginRight="16dp" android:id="@+id/answerRecyclerView"
-            tools:listitem="@layout/answer_list_item"/>
+            tools:listitem="@layout/fragment_request_detail_answer_list_item"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

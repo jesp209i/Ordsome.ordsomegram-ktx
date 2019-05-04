@@ -2,37 +2,46 @@ package dk.enmango.ordsomegram
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.appModule
 import dk.enmango.ordsomegram.ui.AnswersFragment
 import dk.enmango.ordsomegram.ui.AnswersFragmentDirections
-import dk.enmango.ordsomegram.ui.RequestListFragment
-import dk.enmango.ordsomegram.ui.RequestListFragmentDirections
+import dk.enmango.ordsomegram.ui.MyRequestsFragment
+import dk.enmango.ordsomegram.ui.MyRequestsFragmentDirections
+import dk.enmango.ordsomegram.ui.adapters.AnswerListAdapter
+import dk.enmango.ordsomegram.ui.adapters.RequestAdapter
+import dk.enmango.ordsomegram.ui.interfaces.OnListFragmentInteractionListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class MainActivity : AppCompatActivity(), AnswersFragment.OnAnswerListFragmentInteractionListener,
-    RequestListFragment.OnListFragmentInteractionListener {
-    override fun onAnswerListFragmentInteraction(item: Request?) {
+class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
+    override fun <T> onListFragmentInteraction(item: Request?, caller: T) {
         Log.d("Navigation", item.toString())
-        val action = AnswersFragmentDirections.actionToReqAnswer(
-            item?.id!!
-        )
-        findNavController(R.id.nav_host).navigate(action)
-    }
-
-    override fun onListFragmentInteraction(item: Request?) {
-        Log.d("Navigation", item.toString())
-        val action = RequestListFragmentDirections.actionToParams(
-            item?.id!!)
-
-        findNavController(R.id.nav_host).navigate(action)
+        var action: NavDirections?;
+        when(caller){
+            is AnswerListAdapter -> {
+                action = AnswersFragmentDirections.actionToReqAnswer(
+                    item?.requestId!!
+                )
+            }
+            is RequestAdapter -> {
+                action = MyRequestsFragmentDirections.actionToParams(
+                    item?.requestId!!)
+            }
+            else -> {
+                Log.e("Navigation", "Must implement OnListFragmentInteractionListener")
+                action = null
+            }
+        }
+        action?.let {
+            findNavController(R.id.nav_host).navigate(action)
+        }
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -67,6 +76,9 @@ class MainActivity : AppCompatActivity(), AnswersFragment.OnAnswerListFragmentIn
 
         Log.d("MainActivity", "Program started")
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    }
+    fun setActionBarTitle(newtitle: String){
+        supportActionBar?.setTitle(newtitle)
     }
 
 }

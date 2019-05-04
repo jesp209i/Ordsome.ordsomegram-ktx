@@ -12,41 +12,45 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Request
-import dk.enmango.ordsomegram.services.Interfaces.ServerCallback
+import dk.enmango.ordsomegram.services.Interfaces.RequestCallback
 import dk.enmango.ordsomegram.services.RequestRepository
 import dk.enmango.ordsomegram.ui.adapters.RequestAdapter
+import dk.enmango.ordsomegram.ui.interfaces.OnListFragmentInteractionListener
 import org.koin.android.ext.android.inject
 
 
-class RequestListFragment : Fragment(), ServerCallback{
+class MyRequestsFragment : Fragment(), RequestCallback{
     override fun onSuccessRequestList(response: MutableList<Request>) {
         requestList = requestRepo.requestList as ArrayList<Request>
+        mAdapter?.refreshList(requestList)
     }
-
+    private val fragmentTitle: String = "Svar på mine forespørgsler"
     private var columnCount = 1
-
     private var listener: OnListFragmentInteractionListener? = null
-
     val requestRepo: RequestRepository by inject()
+    var requestList : ArrayList<Request> = arrayListOf<Request>()
 
-    var requestList : ArrayList<Request> = requestRepo.requestList as ArrayList<Request>
+    private var mAdapter: RequestAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView( inflater: LayoutInflater,
                                container: ViewGroup?,
                                savedInstanceState: Bundle? ): View? {
-        val view = inflater.inflate(R.layout.fragment_request_list, container, false)
-
+        val view = inflater.inflate(R.layout.fragment_my_requests, container, false)
+        activity?.title = fragmentTitle
+        requestRepo.getRequests(this)
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = RequestAdapter(requestList, listener, context)
+                mAdapter = RequestAdapter(requestList, listener, context)
+                adapter = mAdapter
             }
         }
         return view
@@ -66,19 +70,4 @@ class RequestListFragment : Fragment(), ServerCallback{
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson
-     * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: Request?)
-    }
 }

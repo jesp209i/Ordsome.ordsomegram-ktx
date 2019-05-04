@@ -6,27 +6,27 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import dk.enmango.ordsomegram.model.Answer
 import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.model.DTO.CreateRequest
 import dk.enmango.ordsomegram.model.Request
-import dk.enmango.ordsomegram.services.Interfaces.ServerCallback
+import dk.enmango.ordsomegram.services.Interfaces.AnswerCallback
+import dk.enmango.ordsomegram.services.Interfaces.RequestCallback
 import org.json.JSONObject
 
 class APIController(val appContext: Context) {
     private val TAG = APIController::class.java.simpleName
     private val volleyQueue = Volley.newRequestQueue(appContext)
-    private val BASE_URL: String = "http://10.0.2.2:58882/api/"
+    private val BASE_REQUEST_URL: String = "http://10.0.2.2:58882/api/request/"
     private val CREATE_REQUEST: String = "requests/create"
-    private val GET_ALL_REQUESTS: String = "requests/getall"
-    private val CREATE_ANSWER: String = "answers/create"
+    private val GET_ANSWERS: String = "/answers"
+    private val CREATE_ANSWER: String = "/answer"
 
-    fun getRequests(callback: ServerCallback? = null){
+    fun getRequests(callback: RequestCallback? = null){
         val stringRequest = StringRequest(
-            com.android.volley.Request.Method.GET, "${BASE_URL + GET_ALL_REQUESTS}",
+            com.android.volley.Request.Method.GET, BASE_REQUEST_URL,
             Response.Listener<String> {
-                val realRequests = JSONConvert.jsonToList(it)
+                val realRequests: MutableList<Request> = JSONConvert.jsonToRequestList(it)
                 Log.d(TAG, "${realRequests.toString()}")
                 callback?.onSuccessRequestList(realRequests)
             },
@@ -35,15 +35,15 @@ class APIController(val appContext: Context) {
         volleyQueue.add(stringRequest)
     }
 
-    fun <T> addToServer(model: T, serverCallback: ServerCallback?) {
+    fun <T> addToServer(model: T, requestCallback: RequestCallback?) {
         var url: String? = null
         val jsonObject: JSONObject = when(model){
             is CreateAnswer -> {
-                url = BASE_URL + CREATE_ANSWER
+                url = BASE_REQUEST_URL + model.requestId + CREATE_ANSWER
                 JSONConvert.answerToJSONObject(model)
             }
             is CreateRequest -> {
-                url = BASE_URL + CREATE_REQUEST
+                url = BASE_REQUEST_URL
                 JSONConvert.requestToJSONObject(model)
             }
             else -> {
@@ -64,6 +64,19 @@ class APIController(val appContext: Context) {
             Response.ErrorListener { Log.d(TAG, "That didn't work ${it.message} ||  $jsonObject") }
         )
         volleyQueue.add(jsonRequest)
-        getRequests(serverCallback)
+        getRequests(requestCallback)
+    }
+
+    fun getAnswers(requestId: Int, answerCallback: AnswerCallback?) {
+        val stringRequest = StringRequest(
+            com.android.volley.Request.Method.GET, BASE_REQUEST_URL + requestId + GET_ANSWERS,
+            Response.Listener<String> {
+                val realAnswers: MutableList<Answer> = JSONConvert.jsonToAnswerList(it)
+                Log.d(TAG, "${realAnswers.toString()}")
+                answerCallback?.onSuccessAnswerList(requestId, realAnswers)
+            },
+            Response.ErrorListener { Log.d(TAG, "That didn't work $it") }
+        )
+        volleyQueue.add(stringRequest)
     }
 }

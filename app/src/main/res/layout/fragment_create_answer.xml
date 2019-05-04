@@ -4,7 +4,7 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   tools:context=".ui.RequestAnswerFragment"
+                                                   tools:context=".ui.CreateAnswerFragment"
                                                    android:id="@+id/frameLayout3">
     <TextView
             android:text="@string/placeholder_original_text"

@@ -1,6 +1,7 @@
 package dk.enmango.ordsomegram.model
 
 data class Answer(
-    var id: Int,
+    val answerId: Int,
     val textTranslated: String,
-    val requestId: Int)
+    val requestId: Int,
+    var isPreferred: Boolean)

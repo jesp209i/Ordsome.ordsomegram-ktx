@@ -10,11 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Answer
+import dk.enmango.ordsomegram.model.Request
+import dk.enmango.ordsomegram.services.Interfaces.AnswerCallback
 import dk.enmango.ordsomegram.services.RequestRepository
-import dk.enmango.ordsomegram.ui.adapters.AnswerAdapter
+import dk.enmango.ordsomegram.ui.adapters.RequestDetailAnswerAdapter
 import org.koin.android.ext.android.inject
 
-class AnsweredRequest : Fragment() {
+class MyRequestDetail : Fragment(), AnswerCallback {
+    override fun onSuccessAnswerList(requestId: Int, response: MutableList<Answer>) {
+        answerList.clear()
+        answerList.addAll(response)
+    }
+    private val fragmentTitle = "Min forespørgsel"
     private val requestRepo: RequestRepository by inject()
 
     private var requestId: Int? = null
@@ -31,7 +38,7 @@ class AnsweredRequest : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            val args = AnsweredRequestArgs.fromBundle(it)
+            val args = MyRequestDetailArgs.fromBundle(it)
             requestId = args.requestId
         }
         populateProperties()
@@ -41,19 +48,25 @@ class AnsweredRequest : Fragment() {
         val request = requestRepo.findById(requestId!!)
         //Toast.makeText(context, "$request", Toast.LENGTH_LONG).show()
         origText = request!!.textToTranslate
-        answerList.addAll(request.answers)
+        fetchAnswers(request, this)
+        //answerList.addAll(request.answers)
         sourceLang = request.languageOrigin
         targetLang = request.languageTarget
+    }
+
+    private fun fetchAnswers(request: Request, answerCallBack: AnswerCallback) {
+        requestRepo.getAnswers(request.requestId, answerCallBack)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_answered_request, container, false)
+        val view = inflater.inflate(R.layout.fragment_my_request_detail, container, false)
+        activity?.title = fragmentTitle
         val recyclerView = view.findViewById<RecyclerView>(R.id.answerRecyclerView)
         recyclerView.layoutManager =  LinearLayoutManager(context)
-        recyclerView.adapter = AnswerAdapter(answerList, context!!)
+        recyclerView.adapter = RequestDetailAnswerAdapter(answerList, context!!)
         assignViews(view)
         setViewValues()
         return view

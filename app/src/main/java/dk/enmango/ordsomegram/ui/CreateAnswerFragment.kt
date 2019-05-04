@@ -11,15 +11,14 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import dk.enmango.ordsomegram.R
-import dk.enmango.ordsomegram.model.Answer
 import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.services.RequestRepository
 import org.koin.android.ext.android.inject
 
 
-class RequestAnswerFragment : Fragment() {
+class CreateAnswerFragment : Fragment() {
     private val requestRepo: RequestRepository by inject()
-
+    private val fragmentTitle = "Besvar forespørgsel"
     private var requestId: Int? = null
     private var origText: String? = null
     private var sourceLang: String? = null
@@ -38,7 +37,7 @@ class RequestAnswerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            val args = RequestAnswerFragmentArgs.fromBundle(it)
+            val args = CreateAnswerFragmentArgs.fromBundle(it)
             requestId = args.requestId
         }
         populateProperties()
@@ -49,7 +48,7 @@ class RequestAnswerFragment : Fragment() {
         val request = requestRepo.findById(requestId!!)
         //Toast.makeText(context, "$request", Toast.LENGTH_LONG).show()
         origText = request!!.textToTranslate
-        noOfAnswers = request.answers.size
+        noOfAnswers = request.noOfAnswers
         noOfAnswersString = context!!.getString(R.string.answered_no_of_answers, noOfAnswers.toString())
         sourceLang = context!!.getString(R.string.answered_original_textview,request.languageOrigin)
         targetLang = context!!.getString(R.string.answered_translated_textview,request.languageTarget)
@@ -70,8 +69,8 @@ class RequestAnswerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_request_answer, container, false)
-
+        val view: View = inflater.inflate(R.layout.fragment_create_answer, container, false)
+        activity?.title= fragmentTitle
         assignViews(view)
 
         sourceLangTV?.text = sourceLang

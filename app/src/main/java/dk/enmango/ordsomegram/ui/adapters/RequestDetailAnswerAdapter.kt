@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Answer
-import kotlinx.android.synthetic.main.answer_list_item.view.*
+import kotlinx.android.synthetic.main.fragment_request_detail_answer_list_item.view.*
 
-class AnswerAdapter(
+class RequestDetailAnswerAdapter(
     private val mValues: ArrayList<Answer>,
     private val appContext: Context
-        ) : RecyclerView.Adapter<AnswerAdapter.ViewHolder>() {
+        ) : RecyclerView.Adapter<RequestDetailAnswerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(appContext).inflate(R.layout.answer_list_item, parent, false)
+        val view = LayoutInflater.from(appContext).inflate(R.layout.fragment_request_detail_answer_list_item, parent, false)
         return ViewHolder(view)
     }
 

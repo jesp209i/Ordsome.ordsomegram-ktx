@@ -8,5 +8,5 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        tools:context=".ui.RequestListFragment"
-        tools:listitem="@layout/fragment_requestitem"/>
+        tools:context=".ui.MyRequestsFragment"
+        tools:listitem="@layout/fragment_my_request_item"/>

@@ -9,18 +9,18 @@
     <string name="placeholder_original_text">Portez ce vieux whisky au juge blond qui fume.</string>
     <string name="placeholder_translated_text">Bring denne gamle whisky til den blonde dommer som ryger.</string>
 
-    <!-- Layout: fragment_request.xml -->
+    <!-- Layout: fragment_new_requestuest.xml -->
     <string name="request_fragment_headline">Hvad skal du have oversat?</string>
     <string name="request_fragment_button_text">Send</string>
 
-    <!-- Layout: fragment_request_answer.xml -->
+    <!-- Layout: fragment_create_answer.xml-->
     <string name="answer_fragment_button_text">send forslag</string>
 
-    <!-- Layout: fragment_answered_request.xml -->
+    <!-- Layout: fragment_my_request_detail.xmll -->
     <string name="answered_original_textview">Originalteksten er på: %1$s</string>
     <string name="answered_translated_textview">Forslag er oversat til: %1$s</string>
 
-    <!-- Layout: fragment_requestitem.xml
+    <!-- Layout: fragment_my_request_item.xml.xml
     Also uses "answered_target_language_text" and "answered_source_language_text" as placeholders
         -->
     <string name="reqitem_id_textview">4</string>
@@ -32,5 +32,6 @@
     <string name="placeholder_source_language">Fransk</string>
     <string name="placeholder_target_language">Dansk</string>
     <string name="answered_no_of_answers">Antal oversættelser: %1$s</string>
+    <string name="my_request">Min forspørgsel</string>
 
 </resources>
