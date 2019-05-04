@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.RequestRepository
-import dk.enmango.ordsomegram.ui.adapters.AnswerListAdapter
+import dk.enmango.ordsomegram.ui.adapters.RecyclerViewAdapterWithListFragmentListener
 import dk.enmango.ordsomegram.ui.interfaces.OnListFragmentInteractionListener
 import org.koin.android.ext.android.inject
 
@@ -43,7 +43,7 @@ class AnswersFragment : Fragment() {
         activity?.title = fragmentTitle
         if (view is RecyclerView) {
                 view.layoutManager = LinearLayoutManager(context)
-                view.adapter = AnswerListAdapter(list, listenerAnswer, context!!)
+                view.adapter = RecyclerViewAdapterWithListFragmentListener<AnswersFragment>(list, listenerAnswer, context!!, this)
         }
         return view
     }

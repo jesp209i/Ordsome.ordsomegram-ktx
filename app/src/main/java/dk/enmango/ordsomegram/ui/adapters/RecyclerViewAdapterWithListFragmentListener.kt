@@ -11,15 +11,16 @@ import dk.enmango.ordsomegram.ui.interfaces.OnListFragmentInteractionListener
 import kotlinx.android.synthetic.main.fragment_my_request_item.view.*
 
 /**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnAnswerListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
+ * This is used by [AnswersFragment] and [MyRequestsFragment]
+ * Update the implementation of [OnAnswerListFragmentInteractionListener]
+ * in [MainActivity] if this adapter is used elsewhere.
  */
-class AnswerListAdapter(
-    private val mValues: List<Request>,
+class RecyclerViewAdapterWithListFragmentListener<T>(
+    private val mValues: ArrayList<Request>,
     private val mListenerAnswer: OnListFragmentInteractionListener?,
-    private val appContext: Context
-) : RecyclerView.Adapter<AnswerListAdapter.ViewHolder>() {
+    private val appContext: Context,
+    private val caller: T
+) : RecyclerView.Adapter<RecyclerViewAdapterWithListFragmentListener<T>.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
 
@@ -28,7 +29,7 @@ class AnswerListAdapter(
             val item = v.tag as Request
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
-            mListenerAnswer?.onListFragmentInteraction(item,this)
+            mListenerAnswer?.onListFragmentInteraction(item,caller)
         }
     }
 
@@ -51,6 +52,12 @@ class AnswerListAdapter(
     }
 
     override fun getItemCount(): Int = mValues.size
+
+    fun refreshList(requestList: ArrayList<Request>) {
+        mValues.clear()
+        mValues.addAll(requestList)
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemAnswers = view.no_of_answers

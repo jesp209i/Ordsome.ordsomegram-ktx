@@ -12,8 +12,6 @@ import dk.enmango.ordsomegram.ui.AnswersFragment
 import dk.enmango.ordsomegram.ui.AnswersFragmentDirections
 import dk.enmango.ordsomegram.ui.MyRequestsFragment
 import dk.enmango.ordsomegram.ui.MyRequestsFragmentDirections
-import dk.enmango.ordsomegram.ui.adapters.AnswerListAdapter
-import dk.enmango.ordsomegram.ui.adapters.RequestAdapter
 import dk.enmango.ordsomegram.ui.interfaces.OnListFragmentInteractionListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.koin.androidContext
@@ -25,12 +23,12 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
         Log.d("Navigation", item.toString())
         var action: NavDirections?;
         when(caller){
-            is AnswerListAdapter -> {
+            is AnswersFragment -> {
                 action = AnswersFragmentDirections.actionToReqAnswer(
                     item?.requestId!!
                 )
             }
-            is RequestAdapter -> {
+            is MyRequestsFragment -> {
                 action = MyRequestsFragmentDirections.actionToParams(
                     item?.requestId!!)
             }

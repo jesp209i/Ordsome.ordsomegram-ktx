@@ -14,7 +14,7 @@ import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.Interfaces.RequestCallback
 import dk.enmango.ordsomegram.services.RequestRepository
-import dk.enmango.ordsomegram.ui.adapters.RequestAdapter
+import dk.enmango.ordsomegram.ui.adapters.RecyclerViewAdapterWithListFragmentListener
 import dk.enmango.ordsomegram.ui.interfaces.OnListFragmentInteractionListener
 import org.koin.android.ext.android.inject
 
@@ -30,7 +30,7 @@ class MyRequestsFragment : Fragment(), RequestCallback{
     val requestRepo: RequestRepository by inject()
     var requestList : ArrayList<Request> = arrayListOf<Request>()
 
-    private var mAdapter: RequestAdapter? = null
+    private var mAdapter: RecyclerViewAdapterWithListFragmentListener<MyRequestsFragment>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +49,16 @@ class MyRequestsFragment : Fragment(), RequestCallback{
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                mAdapter = RequestAdapter(requestList, listener, context)
+                mAdapter = RecyclerViewAdapterWithListFragmentListener(requestList, listener, context, MyRequestsFragment())
                 adapter = mAdapter
             }
         }
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requestRepo.getRequests(this)
     }
 
     override fun onAttach(context: Context) {
