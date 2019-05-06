@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_my_request_item.view.*
 
 /**
  * This is used by [AnswersFragment] and [MyRequestsFragment]
- * Update the implementation of [OnAnswerListFragmentInteractionListener]
+ * Update the implementation of [OnListFragmentInteractionListener]
  * in [MainActivity] if this adapter is used elsewhere.
  */
 class RecyclerViewAdapterWithListFragmentListener<T>(

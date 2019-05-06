@@ -12,7 +12,7 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 
-class RequestListViewModel(app: Application) : AndroidViewModel(app), KoinComponent, RequestCallback {
+class AnswersViewModel(app: Application) : AndroidViewModel(app), KoinComponent, RequestCallback {
     var fragmentTitle = MutableLiveData<String>()
     val requestRepository: RequestRepository by inject()
     val requestList = MutableLiveData<MutableList<Request>>()
@@ -20,7 +20,7 @@ class RequestListViewModel(app: Application) : AndroidViewModel(app), KoinCompon
     init{
         Log.i("RequestListViewModel", "View model created")
         requestRepository.getRequests(this)
-        fragmentTitle.value = app.getString(R.string.my_requests)
+        fragmentTitle.value = app.getString(R.string.answers_fragment_title)
     }
 
     override fun onSuccessRequestList(response: MutableList<Request>) {

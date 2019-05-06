@@ -14,11 +14,14 @@ import org.koin.core.inject
 
 class RequestDetailViewModel(val app: Application) : AndroidViewModel(app), KoinComponent, AnswerCallback {
     val requestRepo: RequestRepository by inject()
+
     val fragmentTitle= MutableLiveData<String>()
     val sourceLanguage = MutableLiveData<String>()
     val targetLanguage = MutableLiveData<String>()
     val originalRequestText = MutableLiveData<String>()
     val answerList = MutableLiveData<MutableList<Answer>>()
+    val closedRequest = MutableLiveData<String>()
+    var requestId: Int? = null
 
     init {
         Log.i("RequestDetailViewModel", "View model created")
@@ -29,12 +32,26 @@ class RequestDetailViewModel(val app: Application) : AndroidViewModel(app), Koin
         answerList.postValue(response)
     }
     fun getRequestDetails(requestId: Int){
+        this.requestId = requestId
         val request = requestRepo.findById(requestId)
         request?.let {
             sourceLanguage.value = app.getString(R.string.answered_original_textview,it.languageOrigin)
             targetLanguage.value = app.getString(R.string.answered_translated_textview,it.languageTarget)
             originalRequestText.value = it.textToTranslate
+            closedRequest.postValue(
+                when(it.isClosed){
+                true -> "Denne forespørgsel er lukket"
+                false -> "Denne forespørgsel er åben"
+            })
+            Log.i("RequestDetailVM","isClosed: ${it.isClosed}")
         }
         requestRepo.getAnswers(requestId, this)
+    }
+
+    fun changeRequestStatus() {
+        requestId?.let {
+            requestRepo.changeRequestStatus(it)
+            getRequestDetails(it)
+        }
     }
 }

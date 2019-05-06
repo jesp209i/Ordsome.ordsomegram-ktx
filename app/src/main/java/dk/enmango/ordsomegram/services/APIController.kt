@@ -21,6 +21,7 @@ class APIController(val appContext: Context) {
     private val CREATE_REQUEST: String = "requests/create"
     private val GET_ANSWERS: String = "/answers"
     private val CREATE_ANSWER: String = "/answer"
+    private val CLOSE_REQUEST: String = "/close"
 
     fun getRequests(callback: RequestCallback? = null){
         val stringRequest = StringRequest(
@@ -75,6 +76,19 @@ class APIController(val appContext: Context) {
                 Log.d(TAG, "${realAnswers.toString()}")
                 answerCallback?.onSuccessAnswerList(requestId, realAnswers)
             },
+            Response.ErrorListener { Log.d(TAG, "That didn't work $it") }
+        )
+        volleyQueue.add(stringRequest)
+    }
+
+    fun changeRequestStatus(requestId: Int) {
+        val closeUrl = BASE_REQUEST_URL + requestId + CLOSE_REQUEST
+        val stringRequest = StringRequest(
+            com.android.volley.Request.Method.PATCH, closeUrl,
+            Response.Listener<String> {
+
+                Log.d(TAG, "Close Request Patch send")
+                },
             Response.ErrorListener { Log.d(TAG, "That didn't work $it") }
         )
         volleyQueue.add(stringRequest)

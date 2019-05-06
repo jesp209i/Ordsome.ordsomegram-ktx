@@ -8,44 +8,46 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import dk.enmango.ordsomegram.R
 import dk.enmango.ordsomegram.model.Request
-import dk.enmango.ordsomegram.services.RequestRepository
 import dk.enmango.ordsomegram.ui.adapters.RecyclerViewAdapterWithListFragmentListener
 import dk.enmango.ordsomegram.ui.interfaces.OnListFragmentInteractionListener
-import org.koin.android.ext.android.inject
+import dk.enmango.ordsomegram.viewmodel.AnswersViewModel
 
-/**
- * A fragment representing a list of Items.
- * Activities containing this fragment MUST implement the
- * [AnswersFragment.OnAnswerListFragmentInteractionListener] interface.
- */
 class AnswersFragment : Fragment() {
-    private val fragmentTitle: String = "Besvar forespørgsler"
-    val requestRepo: RequestRepository by inject()
-
-    val list: ArrayList<Request> = requestRepo.requestList as ArrayList<Request>
-    // TODO: Customize parameters
-    private var columnCount = 1
-
+    private var answersVM: AnswersViewModel? = null
+    val requestList: ArrayList<Request> = arrayListOf<Request>()
     private var listenerAnswer: OnListFragmentInteractionListener? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private var mAdapter: RecyclerViewAdapterWithListFragmentListener<AnswersFragment>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_request_detail_answer_list, container, false)
-        activity?.title = fragmentTitle
         if (view is RecyclerView) {
                 view.layoutManager = LinearLayoutManager(context)
-                view.adapter = RecyclerViewAdapterWithListFragmentListener<AnswersFragment>(list, listenerAnswer, context!!, this)
+                mAdapter = RecyclerViewAdapterWithListFragmentListener<AnswersFragment>(requestList, listenerAnswer, context!!, this)
+            view.adapter = mAdapter
         }
+        initViewModel()
         return view
+    }
+    private fun initViewModel() {
+        answersVM = ViewModelProviders.of(this).get(AnswersViewModel::class.java)
+        val listObserver: Observer<MutableList<Request>> = Observer{
+            requestList.clear()
+            requestList.addAll(it)
+            mAdapter?.notifyDataSetChanged()
+        }
+        answersVM?.let {
+            it.requestList.observe(this,listObserver)
+            it.fragmentTitle.observe(this, Observer{
+                activity?.title = it
+            })
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -61,17 +63,5 @@ class AnswersFragment : Fragment() {
         super.onDetach()
         listenerAnswer = null
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson
-     * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
 
 }

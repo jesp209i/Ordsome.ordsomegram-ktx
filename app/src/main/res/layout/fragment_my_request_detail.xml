@@ -42,6 +42,19 @@
             android:layout_marginLeft="16dp" android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp" android:layout_marginRight="16dp" android:id="@+id/answerRecyclerView"
             tools:listitem="@layout/fragment_request_detail_answer_list_item"/>
+    <TextView
+            android:text="TextView"
+            android:id="@+id/request_open_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/answerRecyclerView"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/answered_original_text"
+            app:layout_constraintStart_toEndOf="@+id/answered_translated_textview" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintVertical_bias="0.666"
+            />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

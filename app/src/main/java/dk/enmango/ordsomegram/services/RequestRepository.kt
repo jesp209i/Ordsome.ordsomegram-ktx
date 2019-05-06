@@ -55,4 +55,15 @@ class RequestRepository(val apiController: APIController): RequestCallback, Answ
     fun getRequests(callback: RequestCallback? = this){
         apiController.getRequests(callback)
     }
+
+    fun changeRequestStatus(requestId: Int) {
+        val request = findById(requestId)
+        if (request?.isClosed!!) {
+            request.isClosed = false
+        }
+        if (!request?.isClosed!!) {
+            request.isClosed = true
+        }
+            apiController.changeRequestStatus(requestId)
+    }
 }
