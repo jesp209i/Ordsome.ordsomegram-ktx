@@ -23,15 +23,16 @@ import dk.enmango.ordsomegram.viewmodel.RequestListViewModel
 import org.koin.android.ext.android.inject
 
 class MyRequestDetail : Fragment(){
-
     private lateinit var requestDetailVM: RequestDetailViewModel
-    private var requestId: Int? = null
     private lateinit var ans_org_text: TextView
     private lateinit var ans_source_lan_tv: TextView
     private lateinit var ans_target_lan_tv: TextView
     private lateinit var request_open_tv: TextView
+    private lateinit var recyclerView: RecyclerView
+
     private val answerList : ArrayList<Answer> = arrayListOf()
-    var recyclerView: RecyclerView? = null
+    private var requestId: Int? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +48,7 @@ class MyRequestDetail : Fragment(){
     ): View? {
         val view = inflater.inflate(R.layout.fragment_my_request_detail, container, false)
         recyclerView = view.findViewById<RecyclerView>(R.id.answerRecyclerView)
-        recyclerView?.let {
+        recyclerView.let {
             it.layoutManager = LinearLayoutManager(context)
             it.adapter = RequestDetailAnswerAdapter(answerList, context!!)
         }
@@ -79,7 +80,7 @@ class MyRequestDetail : Fragment(){
             it.answerList.observe(this, Observer {
                 answerList.clear()
                 answerList.addAll(it)
-                recyclerView?.adapter?.notifyDataSetChanged()
+                recyclerView.adapter?.notifyDataSetChanged()
             })
             it.closedRequest.observe(this, Observer{
                 request_open_tv.text = it
