@@ -23,8 +23,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyRequestsFragment : Fragment(){
     private var requestListVM: RequestListViewModel? = null
-
-    private val fragmentTitle: String = "Svar på mine forespørgsler"
     private var listener: OnListFragmentInteractionListener? = null
     private val requestList : ArrayList<Request> = arrayListOf()
 
@@ -41,21 +39,23 @@ class MyRequestsFragment : Fragment(){
         if (recyclerView is RecyclerView) {
             with(recyclerView) {
                 layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
-                mAdapter = RecyclerViewAdapterWithListFragmentListener(requestList, listener, activity!!.applicationContext, MyRequestsFragment())
+                mAdapter = RecyclerViewAdapterWithListFragmentListener(requestList, listener, activity!!.applicationContext, this@MyRequestsFragment)
                 adapter = mAdapter
             }
         }
         initViewModel()
-        activity?.title = fragmentTitle
         return recyclerView
     }
 
     private fun initViewModel() {
-        requestListVM = getViewModel<RequestListViewModel>()
-        val listObserver: Observer<MutableList<Request>> = Observer(function = {
+        requestListVM = ViewModelProviders.of(this).get(RequestListViewModel::class.java)
+        val listObserver: Observer<MutableList<Request>> = Observer{
             requestList.clear()
             requestList.addAll(it)
             mAdapter?.notifyDataSetChanged()
+        }
+        requestListVM?.fragmentTitle?.observe(this, Observer {
+            activity?.title = it
         })
         requestListVM?.requestList?.observe(this,listObserver)
     }

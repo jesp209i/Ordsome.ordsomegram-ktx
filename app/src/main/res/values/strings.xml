@@ -6,8 +6,8 @@
     <string name="title_send_answers">Besvar</string>
 
     <!-- Generel placeholders throughout -->
-    <string name="placeholder_original_text">Portez ce vieux whisky au juge blond qui fume.</string>
-    <string name="placeholder_translated_text">Bring denne gamle whisky til den blonde dommer som ryger.</string>
+    <string name="placeholder_original_text">static: Portez ce vieux whisky au juge blond qui fume.</string>
+    <string name="placeholder_translated_text">static: Bring denne gamle whisky til den blonde dommer som ryger.</string>
 
     <!-- Layout: fragment_new_requestuest.xml -->
     <string name="request_fragment_headline">Hvad skal du have oversat?</string>
@@ -33,5 +33,7 @@
     <string name="placeholder_target_language">Dansk</string>
     <string name="answered_no_of_answers">Antal oversættelser: %1$s</string>
     <string name="my_request">Min forspørgsel</string>
+    <string name="my_requests">Svar på mine forespørgsler</string>
+    <string name="request_detail">Min forespørgsel</string>
 
 </resources>

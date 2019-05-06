@@ -21,20 +21,19 @@ class MainActivity : AppCompatActivity(), OnListFragmentInteractionListener {
 
     override fun <T> onListFragmentInteraction(item: Request?, caller: T) {
         Log.d("Navigation", item.toString())
-        var action: NavDirections?;
-        when(caller){
+        var action = when(caller){
             is AnswersFragment -> {
-                action = AnswersFragmentDirections.actionToReqAnswer(
+                AnswersFragmentDirections.actionToReqAnswer(
                     item?.requestId!!
                 )
             }
             is MyRequestsFragment -> {
-                action = MyRequestsFragmentDirections.actionToParams(
+                MyRequestsFragmentDirections.actionToParams(
                     item?.requestId!!)
             }
             else -> {
                 Log.e("Navigation", "Must implement OnListFragmentInteractionListener")
-                action = null
+                null
             }
         }
         action?.let {

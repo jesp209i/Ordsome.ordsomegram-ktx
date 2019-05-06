@@ -1,11 +1,14 @@
 package dk.enmango.ordsomegram.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.enmango.ordsomegram.R
@@ -14,26 +17,19 @@ import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.Interfaces.AnswerCallback
 import dk.enmango.ordsomegram.services.RequestRepository
 import dk.enmango.ordsomegram.ui.adapters.RequestDetailAnswerAdapter
+import dk.enmango.ordsomegram.viewmodel.RequestDetailViewModel
+import dk.enmango.ordsomegram.viewmodel.RequestListViewModel
 import org.koin.android.ext.android.inject
 
-class MyRequestDetail : Fragment(), AnswerCallback {
-    override fun onSuccessAnswerList(requestId: Int, response: MutableList<Answer>) {
-        answerList.clear()
-        answerList.addAll(response)
-    }
-    private val fragmentTitle = "Min forespørgsel"
-    private val requestRepo: RequestRepository by inject()
+class MyRequestDetail : Fragment(){
 
+    private var requestDetailVM: RequestDetailViewModel? = null;
     private var requestId: Int? = null
     private lateinit var ans_org_text: TextView
-    private lateinit var ans_trans_text: TextView
     private lateinit var ans_source_lan_tv: TextView
     private lateinit var ans_target_lan_tv: TextView
-    private var origText: String? = null
-    private var sourceLang: String? = null
-    private var targetLang: String? = null
     private val answerList : ArrayList<Answer> = arrayListOf()
-
+    var recyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,21 +37,6 @@ class MyRequestDetail : Fragment(), AnswerCallback {
             val args = MyRequestDetailArgs.fromBundle(it)
             requestId = args.requestId
         }
-        populateProperties()
-    }
-
-    private fun populateProperties() {
-        val request = requestRepo.findById(requestId!!)
-        //Toast.makeText(context, "$request", Toast.LENGTH_LONG).show()
-        origText = request!!.textToTranslate
-        fetchAnswers(request, this)
-        //answerList.addAll(request.answers)
-        sourceLang = request.languageOrigin
-        targetLang = request.languageTarget
-    }
-
-    private fun fetchAnswers(request: Request, answerCallBack: AnswerCallback) {
-        requestRepo.getAnswers(request.requestId, answerCallBack)
     }
 
     override fun onCreateView(
@@ -63,21 +44,39 @@ class MyRequestDetail : Fragment(), AnswerCallback {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_my_request_detail, container, false)
-        activity?.title = fragmentTitle
-        val recyclerView = view.findViewById<RecyclerView>(R.id.answerRecyclerView)
-        recyclerView.layoutManager =  LinearLayoutManager(context)
-        recyclerView.adapter = RequestDetailAnswerAdapter(answerList, context!!)
+        recyclerView = view.findViewById<RecyclerView>(R.id.answerRecyclerView)
+        recyclerView?.let {
+            it.layoutManager = LinearLayoutManager(context)
+            it.adapter = RequestDetailAnswerAdapter(answerList, context!!)
+        }
         assignViews(view)
-        setViewValues()
+        initViewModel(requestId!!)
+        //setViewValues()
         return view
     }
 
-    fun setViewValues(){
-        val sourceLanguage = getString(R.string.answered_original_textview, sourceLang)
-        val targetLanguage = getString(R.string.answered_translated_textview, targetLang)
-        ans_org_text.text = origText
-        ans_source_lan_tv.text = sourceLanguage
-        ans_target_lan_tv.text = targetLanguage
+    private fun initViewModel(requestId: Int) {
+        requestDetailVM = ViewModelProviders.of(this).get(RequestDetailViewModel::class.java)
+        requestDetailVM?.fragmentTitle?.observe(this, Observer {
+            activity?.title = it
+        })
+        requestDetailVM?.let {
+            it.getRequestDetails(requestId)
+            it.originalRequestText.observe(this, Observer {
+                ans_org_text.text = it
+            })
+            it.sourceLanguage.observe(this, Observer{
+                ans_source_lan_tv.text = it
+            })
+            it.targetLanguage.observe(this, Observer{
+                ans_target_lan_tv.text = it
+            })
+            it.answerList.observe(this, Observer {
+                answerList.clear()
+                answerList.addAll(it)
+                recyclerView?.adapter?.notifyDataSetChanged()
+            })
+        } // end of let
     }
 
     fun assignViews(view:View){
