@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dk.enmango.ordsomegram.model.Answer
+import dk.enmango.ordsomegram.model.DTO.AnswerIsPreffered
 import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.model.DTO.CreateRequest
 import dk.enmango.ordsomegram.model.DTO.RequestChangeStatus
@@ -67,5 +68,15 @@ class RequestRepository(val apiController: APIController): RequestCallback, Answ
             request.isClosed = true
         }
         apiController.changeRequestStatus(requestId, RequestChangeStatus(requestId, request?.isClosed), this)
+    }
+    fun changeAnswerStatus(answer: Answer,callback: AnswerCallback = this) {
+        var isClosed = answer?.isPreferred!!
+        if (isClosed) {
+            answer.isPreferred = false
+        }
+        if (!isClosed) {
+            answer.isPreferred = true
+        }
+        apiController.changeAnswerStatus(AnswerIsPreffered(answer.requestId, answer.answerId,answer.isPreferred), callback)
     }
 }

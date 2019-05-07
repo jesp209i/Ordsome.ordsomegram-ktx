@@ -1,5 +1,6 @@
 package dk.enmango.ordsomegram.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -48,10 +49,7 @@ class MyRequestDetail : Fragment(){
     ): View? {
         val view = inflater.inflate(R.layout.fragment_my_request_detail, container, false)
         recyclerView = view.findViewById<RecyclerView>(R.id.answerRecyclerView)
-        recyclerView.let {
-            it.layoutManager = LinearLayoutManager(context)
-            it.adapter = RequestDetailAnswerAdapter(answerList, context!!)
-        }
+        recyclerView.layoutManager = LinearLayoutManager(context)
         assignViews(view)
         initViewModel(requestId!!)
         request_open_tv.setOnClickListener{
@@ -63,6 +61,7 @@ class MyRequestDetail : Fragment(){
 
     private fun initViewModel(requestId: Int) {
         requestDetailVM = ViewModelProviders.of(this).get(RequestDetailViewModel::class.java)
+        recyclerView.adapter = RequestDetailAnswerAdapter(answerList, context!!, requestDetailVM)
         requestDetailVM.fragmentTitle.observe(this, Observer {
             activity?.title = it
         })
@@ -84,6 +83,14 @@ class MyRequestDetail : Fragment(){
             })
             it.closedRequest.observe(this, Observer{
                 request_open_tv.text = it
+            })
+            it.closedRequestBool.observe(this, Observer {
+                when(it){
+                    true -> { request_open_tv.setBackgroundColor(Color.parseColor("#491217")) }
+                    false -> { request_open_tv.setBackgroundColor(Color.parseColor("#1c7430")) }
+                }
+
+
             })
         } // end of let
     }

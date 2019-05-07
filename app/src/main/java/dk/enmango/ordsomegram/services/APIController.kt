@@ -7,6 +7,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import dk.enmango.ordsomegram.model.Answer
+import dk.enmango.ordsomegram.model.DTO.AnswerIsPreffered
 import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.model.DTO.CreateRequest
 import dk.enmango.ordsomegram.model.DTO.RequestChangeStatus
@@ -19,10 +20,10 @@ class APIController(val appContext: Context) {
     private val TAG = APIController::class.java.simpleName
     private val volleyQueue = Volley.newRequestQueue(appContext)
     private val BASE_REQUEST_URL: String = "http://10.0.2.2:7000/api/requests/"
-    private val CREATE_REQUEST: String = "requests/create"
     private val GET_ANSWERS: String = "/answers"
     private val CREATE_ANSWER: String = "/answer"
     private val CLOSE_REQUEST: String = "isclosed"
+    private val PATCH_ANSWER_PREFERRED = "http://10.0.2.2:7000/api/answers/isPreferred"
 
     fun getRequests(callback: RequestCallback? = null){
         val stringRequest = StringRequest(
@@ -99,5 +100,22 @@ class APIController(val appContext: Context) {
         )
         volleyQueue.add(jsonRequest)
         getRequests(requestCallback)
+    }
+
+    fun changeAnswerStatus(answerIsPreffered: AnswerIsPreffered, callback: AnswerCallback) {
+        val patchAnswerUrl = PATCH_ANSWER_PREFERRED
+        val jsonObject: JSONObject = JSONConvert.answerIsPrefferedToJSONObject(answerIsPreffered)
+        val jsonRequest = JsonObjectRequest(com.android.volley.Request.Method.PATCH, patchAnswerUrl, jsonObject,
+            Response.Listener<JSONObject> {
+                try {
+                    Log.d(TAG, "Response: $it")
+                }catch (e:Exception){
+                    Log.d(TAG, "Exception: $e")
+                }
+            },
+            Response.ErrorListener { Log.d(TAG, "That didn't work ${it.message} ||  $jsonObject") }
+        )
+        volleyQueue.add(jsonRequest)
+        getAnswers(answerIsPreffered.requestId,callback)
     }
 }

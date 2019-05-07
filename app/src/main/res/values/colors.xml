@@ -6,4 +6,5 @@
     <color name="answerWhite">#FFFFFF</color>
     <color name="answerBlue">#1976D2</color>
     <color name="common_border_color">#607D8B</color>
+    <color name="request_open">#1c7430</color>
 </resources>

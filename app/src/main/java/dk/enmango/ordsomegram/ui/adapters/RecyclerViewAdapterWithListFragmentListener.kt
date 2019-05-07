@@ -53,12 +53,6 @@ class RecyclerViewAdapterWithListFragmentListener<T>(
 
     override fun getItemCount(): Int = mValues.size
 
-    fun refreshList(requestList: ArrayList<Request>) {
-        mValues.clear()
-        mValues.addAll(requestList)
-        notifyDataSetChanged()
-    }
-
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemAnswers = view.no_of_answers
         val itemOriginalText = view.original_text

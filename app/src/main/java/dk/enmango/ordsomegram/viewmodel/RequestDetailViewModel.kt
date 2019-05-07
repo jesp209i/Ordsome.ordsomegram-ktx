@@ -9,10 +9,15 @@ import dk.enmango.ordsomegram.model.Answer
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.Interfaces.AnswerCallback
 import dk.enmango.ordsomegram.services.RequestRepository
+import dk.enmango.ordsomegram.ui.interfaces.OnListClickListener
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class RequestDetailViewModel(val app: Application) : AndroidViewModel(app), KoinComponent, AnswerCallback {
+class RequestDetailViewModel(val app: Application) : AndroidViewModel(app), KoinComponent, AnswerCallback, OnListClickListener {
+    override fun onListClick(item: Answer?) {
+        item?.let {requestRepo.changeAnswerStatus(it, this) }
+    }
+
     val requestRepo: RequestRepository by inject()
 
     val fragmentTitle= MutableLiveData<String>()
@@ -21,6 +26,7 @@ class RequestDetailViewModel(val app: Application) : AndroidViewModel(app), Koin
     val originalRequestText = MutableLiveData<String>()
     val answerList = MutableLiveData<MutableList<Answer>>()
     val closedRequest = MutableLiveData<String>()
+    val closedRequestBool = MutableLiveData<Boolean>()
     var requestId: Int? = null
 
     init {
@@ -43,6 +49,7 @@ class RequestDetailViewModel(val app: Application) : AndroidViewModel(app), Koin
                 true -> "Denne forespørgsel er lukket"
                 false -> "Denne forespørgsel er åben"
             })
+            closedRequestBool.postValue(it.isClosed)
             Log.i("RequestDetailVM","isClosed: ${it.isClosed}")
         }
         requestRepo.getAnswers(requestId, this)
@@ -54,4 +61,6 @@ class RequestDetailViewModel(val app: Application) : AndroidViewModel(app), Koin
             getRequestDetails(it)
         }
     }
+
+
 }
