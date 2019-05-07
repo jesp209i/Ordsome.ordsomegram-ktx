@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import dk.enmango.ordsomegram.model.Answer
 import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.model.DTO.CreateRequest
+import dk.enmango.ordsomegram.model.DTO.RequestChangeStatus
 import dk.enmango.ordsomegram.model.Request
 import dk.enmango.ordsomegram.services.Interfaces.AnswerCallback
 import dk.enmango.ordsomegram.services.Interfaces.RequestCallback
@@ -58,12 +59,13 @@ class RequestRepository(val apiController: APIController): RequestCallback, Answ
 
     fun changeRequestStatus(requestId: Int) {
         val request = findById(requestId)
-        if (request?.isClosed!!) {
+        var isClosed = request?.isClosed!!
+        if (isClosed) {
             request.isClosed = false
         }
-        if (!request?.isClosed!!) {
+        if (!isClosed) {
             request.isClosed = true
         }
-            apiController.changeRequestStatus(requestId)
+        apiController.changeRequestStatus(requestId, RequestChangeStatus(requestId, request?.isClosed), this)
     }
 }

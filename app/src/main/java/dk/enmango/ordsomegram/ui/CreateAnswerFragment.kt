@@ -69,7 +69,7 @@ class CreateAnswerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_create_answer, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_answersdetail, container, false)
         activity?.title= fragmentTitle
         assignViews(view)
 

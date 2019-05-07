@@ -16,7 +16,7 @@
 
     </fragment>
     <fragment android:id="@+id/requestAnswer_dest" android:name="dk.enmango.ordsomegram.ui.CreateAnswerFragment"
-              android:label="fragment_request_answer" tools:layout="@layout/fragment_create_answer">
+              android:label="fragment_request_answer" tools:layout="@layout/fragment_answersdetail">
         <argument android:name="requestId" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/answers_dest" android:name="dk.enmango.ordsomegram.ui.AnswersFragment"

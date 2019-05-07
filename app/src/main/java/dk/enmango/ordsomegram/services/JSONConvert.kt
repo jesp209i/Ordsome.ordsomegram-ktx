@@ -3,8 +3,10 @@ package dk.enmango.ordsomegram.services
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dk.enmango.ordsomegram.model.Answer
+import dk.enmango.ordsomegram.model.DTO.AnswerIsPreffered
 import dk.enmango.ordsomegram.model.DTO.CreateAnswer
 import dk.enmango.ordsomegram.model.DTO.CreateRequest
+import dk.enmango.ordsomegram.model.DTO.RequestChangeStatus
 import dk.enmango.ordsomegram.model.Request
 import org.json.JSONObject
 
@@ -26,6 +28,19 @@ object JSONConvert {
         val jsonObject = JSONObject()
         jsonObject.put("requestId", model.requestId)
         jsonObject.put("textTranslated", model.textTranslated)
+        return jsonObject
+    }
+    fun requestChangeStatusToJSONObject(model: RequestChangeStatus): JSONObject{
+        val jsonObject = JSONObject()
+        jsonObject.put("requestId", model.requestId)
+        jsonObject.put("isClosed",model.isClosed)
+        return jsonObject
+    }
+    fun answerIsPrefferedToJSONObject(model: AnswerIsPreffered): JSONObject{
+        val jsonObject = JSONObject()
+        jsonObject.put("requestId", model.requestId)
+        jsonObject.put("answerId", model.answerId)
+        jsonObject.put("isPreferred",model.isPreferred)
         return jsonObject
     }
 

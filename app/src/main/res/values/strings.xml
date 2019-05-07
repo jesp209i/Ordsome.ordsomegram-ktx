@@ -14,7 +14,7 @@
     <string name="request_fragment_headline">Hvad skal du have oversat?</string>
     <string name="request_fragment_button_text">Send</string>
 
-    <!-- Layout: fragment_create_answer.xml-->
+    <!-- Layout: fragment_answersdetail.xml-->
     <string name="answer_fragment_button_text">send forslag</string>
 
     <!-- Layout: fragment_my_request_detail.xmll -->
