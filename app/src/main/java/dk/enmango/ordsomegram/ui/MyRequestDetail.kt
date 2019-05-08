@@ -29,6 +29,7 @@ class MyRequestDetail : Fragment(){
     private lateinit var ans_source_lan_tv: TextView
     private lateinit var ans_target_lan_tv: TextView
     private lateinit var request_open_tv: TextView
+    private lateinit var mAdapter: RequestDetailAnswerAdapter
     private lateinit var recyclerView: RecyclerView
 
     private val answerList : ArrayList<Answer> = arrayListOf()
@@ -52,6 +53,7 @@ class MyRequestDetail : Fragment(){
         recyclerView.layoutManager = LinearLayoutManager(context)
         assignViews(view)
         initViewModel(requestId!!)
+        recyclerView.adapter = mAdapter
         request_open_tv.setOnClickListener{
                 Toast.makeText(context, "You clicked on openclosed request", Toast.LENGTH_LONG).show()
             requestDetailVM.changeRequestStatus()
@@ -61,7 +63,7 @@ class MyRequestDetail : Fragment(){
 
     private fun initViewModel(requestId: Int) {
         requestDetailVM = ViewModelProviders.of(this).get(RequestDetailViewModel::class.java)
-        recyclerView.adapter = RequestDetailAnswerAdapter(answerList, context!!, requestDetailVM)
+        mAdapter = RequestDetailAnswerAdapter(answerList, context!!, requestDetailVM)
         requestDetailVM.fragmentTitle.observe(this, Observer {
             activity?.title = it
         })
@@ -79,7 +81,8 @@ class MyRequestDetail : Fragment(){
             it.answerList.observe(this, Observer {
                 answerList.clear()
                 answerList.addAll(it)
-                recyclerView.adapter?.notifyDataSetChanged()
+                mAdapter.notifyDataSetChanged()
+                Log.d("RequestDetail", "answerList.observe...notifyDataSetChanged() is called")
             })
             it.closedRequest.observe(this, Observer{
                 request_open_tv.text = it
@@ -89,8 +92,6 @@ class MyRequestDetail : Fragment(){
                     true -> { request_open_tv.setBackgroundColor(Color.parseColor("#491217")) }
                     false -> { request_open_tv.setBackgroundColor(Color.parseColor("#1c7430")) }
                 }
-
-
             })
         } // end of let
     }

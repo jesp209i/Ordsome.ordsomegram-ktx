@@ -60,23 +60,13 @@ class RequestRepository(val apiController: APIController): RequestCallback, Answ
 
     fun changeRequestStatus(requestId: Int) {
         val request = findById(requestId)
-        var isClosed = request?.isClosed!!
-        if (isClosed) {
-            request.isClosed = false
+        request?.let {
+            it.isClosed = !it.isClosed
+            apiController.changeRequestStatus(requestId, RequestChangeStatus(requestId, request.isClosed), this)
         }
-        if (!isClosed) {
-            request.isClosed = true
-        }
-        apiController.changeRequestStatus(requestId, RequestChangeStatus(requestId, request?.isClosed), this)
     }
     fun changeAnswerStatus(answer: Answer,callback: AnswerCallback = this) {
-        var isClosed = answer?.isPreferred!!
-        if (isClosed) {
-            answer.isPreferred = false
-        }
-        if (!isClosed) {
-            answer.isPreferred = true
-        }
+        answer.isPreferred = !answer.isPreferred
         apiController.changeAnswerStatus(AnswerIsPreffered(answer.requestId, answer.answerId,answer.isPreferred), callback)
     }
 }
